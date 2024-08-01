@@ -3,7 +3,7 @@ import { ShowMore } from "./_components/show-more";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center space-x-6 bg-foreground/5">
+    <main className="justify-space-x-6 flex min-h-screen items-center bg-foreground/5">
       <ShowMore />
       <div className="w-full max-w-lg space-y-4 rounded-lg bg-background p-5 shadow-lg">
         <div>

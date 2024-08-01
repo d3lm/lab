@@ -2,11 +2,22 @@
 
 import * as React from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { Check, Send, Star, ThumbsDown, ThumbsUp, X } from "lucide-react";
+import {
+  MessageSquare,
+  Send,
+  Star,
+  Sun,
+  ALargeSmall,
+  Text,
+  ThumbsDown,
+  ThumbsUp,
+  X,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { cn } from "@/lib/utils";
 import styles from "./styles.module.css";
+import useMeasure from "react-use-measure";
 
 export const RatePopoverContext = React.createContext<{
   open: boolean;
@@ -187,12 +198,14 @@ function ThumbsUpIcon(props: { active: boolean; className?: string }) {
       width="30"
       height="30"
       fill={props.active ? "hsl(var(--foreground))" : "currentColor"}
-      stroke="hsl(var(--foreground))"
+      stroke={
+        props.active ? "hsl(var(--foreground))" : "hsl(var(--foreground))"
+      }
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="2.5"
       className={cn(
-        "lucide lucide-thumbs-up text-background transition-all group-hover:text-muted",
+        "lucide lucide-thumbs-up text-background transition-all",
         styles.child,
         props.className,
       )}
@@ -230,9 +243,7 @@ function LoveThisButton() {
   const allowTap = !loveThis && !ctx.active;
 
   return (
-    <Button
-      variant="ghost"
-      size="icon"
+    <button
       className="size-16 relative rounded-full"
       onClick={() => {
         if (allowTap) {
@@ -252,10 +263,10 @@ function LoveThisButton() {
           animate={
             loveThis
               ? {
-                y: -25,
-                x: -3,
-                rotate: -2,
-              }
+                  y: -25,
+                  x: -3,
+                  rotate: -2,
+                }
               : {}
           }
           transition={{
@@ -272,10 +283,10 @@ function LoveThisButton() {
           animate={
             loveThis
               ? {
-                y: -27,
-                x: 3,
-                rotate: 2,
-              }
+                  y: -27,
+                  x: 3,
+                  rotate: 2,
+                }
               : {}
           }
           transition={{ ...loveThisBaseTransition, delay: 0.05 }}
@@ -285,9 +296,15 @@ function LoveThisButton() {
         </motion.div>
       </motion.div>
       <AnimatePresence>{loveThis && <Particles />}</AnimatePresence>
-    </Button>
+    </button>
   );
 }
+
+const triggerVariants = {
+  press: {
+    scale: 0.9,
+  },
+};
 
 function RatePopover() {
   const ctx = React.useContext(RatePopoverContext);
@@ -302,18 +319,22 @@ function RatePopover() {
                 initial={{ y: -10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -10, opacity: 0 }}
+                whileTap={"press"}
+                variants={triggerVariants}
                 className="flex flex-col items-center gap-2"
               >
-                <div className="size-14 inline-flex items-center justify-center whitespace-nowrap rounded-full p-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                <div className="size-14 inline-flex items-center justify-center whitespace-nowrap rounded-full text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
                   <ThumbsUp
-                    className="size-8 cursor-pointer"
+                    className={cn(
+                      "size-7 cursor-pointer text-muted-foreground",
+                      { "text-primary": ctx.active },
+                    )}
                     fill={ctx.active ? "currentColor" : "none"}
                   />
                 </div>
-                <p>{ctx.active ? "Rated" : "Rate"}</p>
               </motion.div>
             ) : (
-              <div className="h-[88px] w-[56px]" />
+              <div className="h-[56px] w-[56px]" />
             )}
           </AnimatePresence>
         </Popover.Trigger>
@@ -327,7 +348,7 @@ function RatePopover() {
                     initial={{ y: 10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 10, opacity: 0 }}
-                    className="relative z-50 flex items-end gap-4 rounded-full border bg-popover px-8 pb-4 pt-3 font-semibold text-popover-foreground shadow-md outline-none"
+                    className="relative z-50 flex items-end gap-4 rounded-full border bg-popover px-12 pb-5 pt-3 font-medium text-foreground outline-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
                   >
                     <div className="flex flex-col items-center gap-2">
                       <Button
@@ -359,12 +380,14 @@ function RatePopover() {
                   </motion.div>
                 </Popover.Content>
 
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.3 }}
-                  exit={{ opacity: 0 }}
-                  className="size-full absolute left-0 top-0 z-40 bg-black"
-                />
+                {ctx.open && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed bottom-0 left-0 z-40 h-[120px] w-full bg-white/80"
+                  />
+                )}
               </>
             </Popover.Portal>
           )}
@@ -377,18 +400,30 @@ function RatePopover() {
 export function LoveThis() {
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState(false);
+  const [ref, bounds] = useMeasure();
 
   return (
     <RatePopoverContext.Provider value={{ open, setOpen, active, setActive }}>
-      <div className="flex items-end gap-14 font-semibold">
+      <div className="absolute bottom-12 left-1/2 z-10 flex w-[80%] -translate-x-1/2 items-center gap-4 rounded-full border border-foreground/10 bg-muted p-1 px-4 font-semibold drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
         <div className="flex flex-col items-center gap-2">
           <Button variant="ghost" size="icon" className="size-14 rounded-full">
-            <Check className="size-8" />
+            <MessageSquare className="size-7 text-muted-foreground" />
           </Button>
-          <p>My List</p>
         </div>
-
+        <div className="flex flex-col items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-14 rounded-full p-2"
+          >
+            <Send className="size-7 text-muted-foreground" />
+          </Button>
+        </div>
         <RatePopover />
+
+        <div className="px-2">
+          <div className="h-8 w-px rounded bg-gradient-to-b from-transparent via-muted-foreground/30 to-transparent" />
+        </div>
 
         <div className="flex flex-col items-center gap-2">
           <Button
@@ -396,11 +431,43 @@ export function LoveThis() {
             size="icon"
             className="size-14 rounded-full p-2"
           >
-            <Send className="size-7 translate-y-0.5" />
+            <Text className="size-7 text-muted-foreground" />
           </Button>
-          <p>Share</p>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-14 rounded-full p-2"
+          >
+            <ALargeSmall className="size-7 text-muted-foreground" />
+          </Button>
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-14 rounded-full p-2"
+          >
+            <Sun className="size-7 text-muted-foreground" />
+          </Button>
         </div>
       </div>
+
+      <motion.div
+        animate={{
+          height: bounds.height,
+        }}
+        className="absolute bottom-0 left-0 z-0 w-full bg-gradient-to-t from-background/95 from-25% to-background/0"
+      >
+        <motion.div ref={ref} className={cn(open ? "h-[80vh]" : "h-[300px]")} />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: open ? 1 : 0 }}
+        className="size-full fixed -top-[48px] left-0 z-0 bg-white/30 backdrop-blur-sm"
+      />
     </RatePopoverContext.Provider>
   );
 }
