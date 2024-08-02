@@ -10,23 +10,32 @@ export function Cards() {
   const [ref, screen] = useMeasure();
   const mousePosition = useMousePosition();
 
-  const mouseRelativeToScreen = useMotionValue(0);
-  const mouseRelativeToCenter = useMotionValue(0);
-
-  mouseRelativeToScreen.set(mousePosition.x / screen.width);
-  mouseRelativeToCenter.set(
-    Math.abs((mousePosition.x - screen.width / 2) / screen.width),
+  const halfScreenWidth = screen.width / 2;
+  const mouseRange = Math.min(
+    Math.max(mousePosition.x - (screen.x + screen.width / 2), -halfScreenWidth),
+    halfScreenWidth,
   );
 
-  const rotate = useTransform(mouseRelativeToScreen, [0, 1], [10, -10]);
-  const translateY = useTransform(mouseRelativeToCenter, [0, 0.5], [-20, -5]);
+  const mouseRelativeToCenter = useMotionValue(0);
+  mouseRelativeToCenter.set(mouseRange);
+
+  const rotate = useTransform(
+    mouseRelativeToCenter,
+    [-halfScreenWidth, halfScreenWidth],
+    [5, -5],
+  );
+  const translateY = useTransform(
+    mouseRelativeToCenter,
+    [-halfScreenWidth, halfScreenWidth],
+    [-30, -5],
+  );
 
   return (
     <div
       ref={ref}
-      className="flex h-screen w-full flex-col justify-between p-6"
+      className="relative flex h-screen w-full max-w-[600px] flex-col justify-between overflow-hidden bg-background p-6"
     >
-      <div className="absolute bottom-1/4 left-0 w-full">
+      <div className="absolute bottom-[180px] left-0 w-full">
         <div className="relative">
           <div className="absolute w-full px-6">
             <motion.div
