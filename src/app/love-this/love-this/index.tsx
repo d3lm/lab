@@ -263,10 +263,10 @@ function LoveThisButton() {
           animate={
             loveThis
               ? {
-                  y: -25,
-                  x: -3,
-                  rotate: -2,
-                }
+                y: -25,
+                x: -3,
+                rotate: -2,
+              }
               : {}
           }
           transition={{
@@ -283,10 +283,10 @@ function LoveThisButton() {
           animate={
             loveThis
               ? {
-                  y: -27,
-                  x: 3,
-                  rotate: 2,
-                }
+                y: -27,
+                x: 3,
+                rotate: 2,
+              }
               : {}
           }
           transition={{ ...loveThisBaseTransition, delay: 0.05 }}
@@ -385,7 +385,7 @@ function RatePopover() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed bottom-0 left-0 z-40 h-[120px] w-full bg-white/80"
+                    className="fixed bottom-0 left-0 z-40 h-[300px] w-full bg-gradient-to-t from-white/80 from-25% to-transparent"
                   />
                 )}
               </>
@@ -404,7 +404,7 @@ export function LoveThis() {
 
   return (
     <RatePopoverContext.Provider value={{ open, setOpen, active, setActive }}>
-      <div className="absolute bottom-12 left-1/2 z-10 flex w-[80%] -translate-x-1/2 items-center gap-4 rounded-full border border-foreground/10 bg-muted p-1 px-4 font-semibold drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)]">
+      <div className="absolute bottom-12 left-1/2 z-10 flex -translate-x-1/2 items-center gap-4 rounded-full border border-foreground/10 bg-muted p-1 px-4 font-semibold drop-shadow-[0_10px_20px_rgba(0,0,0,0.15)] sm:w-fit">
         <div className="flex flex-col items-center gap-2">
           <Button variant="ghost" size="icon" className="size-14 rounded-full">
             <MessageSquare className="size-7 text-muted-foreground" />
@@ -458,9 +458,9 @@ export function LoveThis() {
         animate={{
           height: bounds.height,
         }}
-        className="absolute bottom-0 left-0 z-0 w-full bg-gradient-to-t from-background/95 from-25% to-background/0"
+        className="absolute bottom-0 left-0 z-0 w-full bg-gradient-to-t from-background/95 from-35% to-background/0"
       >
-        <motion.div ref={ref} className={cn(open ? "h-[80vh]" : "h-[300px]")} />
+        <motion.div ref={ref} className={cn(open ? "h-[60vh]" : "h-[280px]")} />
       </motion.div>
 
       <motion.div
