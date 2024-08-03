@@ -348,7 +348,7 @@ function RatePopover() {
                     initial={{ y: 10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 10, opacity: 0 }}
-                    className="relative z-50 flex items-end gap-4 rounded-full border bg-popover px-12 pb-5 pt-3 font-medium text-foreground outline-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
+                    className="relative z-50 flex items-end gap-4 rounded-full border bg-muted px-12 pb-5 pt-3 font-medium text-foreground outline-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
                   >
                     <div className="flex flex-col items-center gap-2">
                       <Button
@@ -374,7 +374,7 @@ function RatePopover() {
                       <LoveThisButton />
                       <p className="text-nowrap">Love this!</p>
                     </div>
-                    <Popover.Close className="absolute -bottom-[68px] left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full bg-white p-1.5 shadow-md">
+                    <Popover.Close className="absolute -bottom-[68px] left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full bg-background p-1.5 shadow-md">
                       <X className="size-7" />
                     </Popover.Close>
                   </motion.div>
@@ -385,7 +385,7 @@ function RatePopover() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed bottom-0 left-0 z-40 h-[300px] w-full bg-gradient-to-t from-white/80 from-25% to-transparent"
+                    className="fixed bottom-0 left-0 z-40 h-[300px] w-full bg-gradient-to-t from-background/80 from-25% to-transparent"
                   />
                 )}
               </>
@@ -466,7 +466,7 @@ export function LoveThis() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: open ? 1 : 0 }}
-        className="size-full fixed -top-[48px] left-0 z-0 bg-white/30 backdrop-blur-sm"
+        className="size-full fixed -top-[48px] left-0 z-0 bg-background/30 backdrop-blur-sm"
       />
     </RatePopoverContext.Provider>
   );

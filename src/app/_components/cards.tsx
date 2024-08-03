@@ -22,12 +22,12 @@ export function Cards() {
   const rotate = useTransform(
     mouseRelativeToCenter,
     [-halfScreenWidth, halfScreenWidth],
-    [5, -5],
+    [6, -6],
   );
   const translateY = useTransform(
     mouseRelativeToCenter,
     [-halfScreenWidth, halfScreenWidth],
-    [-30, -5],
+    [-30, -15],
   );
 
   return (
@@ -37,7 +37,7 @@ export function Cards() {
     >
       <div className="absolute bottom-[180px] left-0 w-full">
         <div className="relative">
-          <div className="absolute w-full px-6">
+          <div className="absolute w-full select-none px-6">
             <motion.div
               whileTap={{ rotate: rotate.get(), translateY: translateY.get() }}
               className="aspect-[1.586] rounded-2xl bg-foreground/70 p-6 text-background"
@@ -45,7 +45,7 @@ export function Cards() {
               Card 1
             </motion.div>
           </div>
-          <div className="absolute top-[60px] w-full px-6">
+          <div className="absolute top-[60px] w-full select-none px-6">
             <motion.div
               whileTap={{ rotate: rotate.get(), translateY: translateY.get() }}
               className="bg-foreground/85 aspect-[1.586] rounded-2xl p-6 text-background"
@@ -53,7 +53,7 @@ export function Cards() {
               Card 2
             </motion.div>
           </div>
-          <div className="absolute top-[120px] w-full px-6">
+          <div className="absolute top-[120px] w-full select-none px-6">
             <motion.div
               whileTap={{ rotate: rotate.get(), translateY: translateY.get() }}
               className="aspect-[1.586] rounded-2xl bg-foreground p-6 text-background"
