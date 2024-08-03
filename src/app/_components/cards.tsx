@@ -4,6 +4,7 @@ import { motion, MotionConfig, useMotionValue } from "framer-motion";
 import * as React from "react";
 import { useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useMousePosition } from "@/hooks/use-mouse-position";
 
 function Card(props: {
   className?: string;
@@ -26,11 +27,6 @@ function Card(props: {
     );
   }
 
-  // function handleMouseLeave() {
-  //   x.set(0.5);
-  //   xFromCenter.set(0);
-  // }
-
   return (
     <motion.div
       key={props.index}
@@ -44,13 +40,17 @@ function Card(props: {
       className={cn("absolute bottom-0 left-0 w-full px-6", props.className)}
     >
       <motion.div
+        key={props.index}
         whileTap={{
           rotate: rotate.get() * (props.activeCard === props.index ? -1 : 1),
           translateY:
             translateY.get() * (props.activeCard === props.index ? -1 : 1),
         }}
         whileHover={{
-          translateY: -5,
+          translateY:
+            translateY.get() *
+            0.2 *
+            (props.activeCard === props.index ? -1 : 1),
         }}
         onClick={() =>
           props.setActiveCard((prevState) => {
@@ -59,7 +59,6 @@ function Card(props: {
           })
         }
         onMouseMove={handleMouse}
-        // onMouseLeave={handleMouseLeave}
         className="aspect-[1.6] rounded-2xl bg-foreground/70 p-6 text-background sm:aspect-[2]"
       >
         Card {props.index}
@@ -70,6 +69,7 @@ function Card(props: {
 
 export function Cards() {
   const [activeCard, setActiveCard] = React.useState(0);
+  useMousePosition();
 
   return (
     <MotionConfig transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}>
