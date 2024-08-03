@@ -1,120 +1,92 @@
 "use client";
 
-import { useMousePosition } from "@/hooks/use-mouse-position";
 import { motion, MotionConfig, useMotionValue } from "framer-motion";
 import * as React from "react";
-import useMeasure from "react-use-measure";
 import { useTransform } from "framer-motion";
+import { cn } from "@/lib/utils";
+
+function Card(props: {
+  className?: string;
+  index: number;
+  activeCard: number;
+  setActiveCard: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const x = useMotionValue(0.5);
+  const xFromCenter = useMotionValue(0);
+
+  const rotate = useTransform(x, [0, 1], [5, -5]);
+  const translateY = useTransform(xFromCenter, [0, 1], [-30, -5]);
+
+  function handleMouse(event: React.MouseEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+
+    x.set((event.clientX - rect.left) / rect.width);
+    xFromCenter.set(
+      (Math.abs(event.clientX - rect.left - rect.width / 2) / rect.width) * 2,
+    );
+  }
+
+  // function handleMouseLeave() {
+  //   x.set(0.5);
+  //   xFromCenter.set(0);
+  // }
+
+  return (
+    <motion.div
+      key={props.index}
+      animate={
+        props.activeCard === props.index
+          ? { translateY: -340 + (props.index - 1) * -60 }
+          : props.activeCard !== 0
+            ? { translateY: 20 }
+            : {}
+      }
+      className={cn("absolute bottom-0 left-0 w-full px-6", props.className)}
+    >
+      <motion.div
+        whileTap={{
+          rotate: rotate.get() * (props.activeCard === props.index ? -1 : 1),
+          translateY:
+            translateY.get() * (props.activeCard === props.index ? -1 : 1),
+        }}
+        whileHover={{
+          translateY: -5,
+        }}
+        onClick={() =>
+          props.setActiveCard((prevState) => {
+            if (prevState === props.index) return 0;
+            return props.index;
+          })
+        }
+        onMouseMove={handleMouse}
+        // onMouseLeave={handleMouseLeave}
+        className="aspect-[1.6] rounded-2xl bg-foreground/70 p-6 text-background sm:aspect-[2]"
+      >
+        Card {props.index}
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export function Cards() {
   const [activeCard, setActiveCard] = React.useState(0);
-  const [ref, screen] = useMeasure();
-  const mousePosition = useMousePosition();
-
-  const halfScreenWidth = screen.width / 2;
-  const mouseRange = Math.min(
-    Math.max(mousePosition.x - (screen.x + screen.width / 2), -halfScreenWidth),
-    halfScreenWidth,
-  );
-
-  const mouseRelativeToCenter = useMotionValue(0);
-  mouseRelativeToCenter.set(mouseRange);
-
-  const rotate = useTransform(
-    mouseRelativeToCenter,
-    [-halfScreenWidth, halfScreenWidth],
-    [5, -5],
-  );
-  const translateY = useTransform(
-    mouseRelativeToCenter,
-    [-halfScreenWidth, halfScreenWidth],
-    [-30, -5],
-  );
 
   return (
     <MotionConfig transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}>
-      <div
-        ref={ref}
-        className="relative flex h-screen w-full max-w-[600px] flex-col justify-between overflow-hidden bg-background p-6"
-      >
-        <motion.div
-          animate={
-            activeCard === 1
-              ? { translateY: -340 }
-              : activeCard !== 0
-                ? { translateY: 20 }
-                : {}
-          }
-          className="absolute -bottom-[50px] left-0 w-full px-6"
-        >
-          <motion.div
-            whileTap={{
-              rotate: rotate.get() * (activeCard === 1 ? -1 : 1),
-              translateY: translateY.get() * (activeCard === 1 ? -1 : 1),
-            }}
-            onClick={() =>
-              setActiveCard((prevState) => {
-                if (prevState === 1) return 0;
-                return 1;
-              })
-            }
-            className="aspect-[1.586] rounded-2xl bg-foreground/70 p-6 text-background"
-          >
-            Card 1
-          </motion.div>
-        </motion.div>
-        <motion.div
-          animate={
-            activeCard === 2
-              ? { translateY: -410 }
-              : activeCard !== 0
-                ? { translateY: 20 }
-                : {}
-          }
-          className="absolute bottom-[-120px] left-0 w-full px-6"
-        >
-          <motion.div
-            whileTap={{
-              rotate: rotate.get() * (activeCard === 2 ? -1 : 1),
-              translateY: translateY.get() * (activeCard === 2 ? -1 : 1),
-            }}
-            onClick={() =>
-              setActiveCard((prevState) => {
-                if (prevState === 2) return 0;
-                return 2;
-              })
-            }
-            className="bg-foreground/85 aspect-[1.586] rounded-2xl p-6 text-background"
-          >
-            Card 2
-          </motion.div>
-        </motion.div>
-        <motion.div
-          animate={
-            activeCard === 3
-              ? { translateY: -480 }
-              : activeCard !== 0
-                ? { translateY: 20 }
-                : {}
-          }
-          className="absolute bottom-[-190px] left-0 w-full px-6"
-        >
-          <motion.div
-            whileTap={{
-              rotate: rotate.get() * (activeCard === 3 ? -1 : 1),
-              translateY: translateY.get() * (activeCard === 3 ? -1 : 1),
-            }}
-            onClick={() =>
-              setActiveCard((prevState) => {
-                if (prevState === 3) return 0;
-                return 3;
-              })
-            }
-            className="aspect-[1.586] rounded-2xl bg-foreground p-6 text-background"
-          >
-            Card 3
-          </motion.div>
-        </motion.div>
+      <div className="relative flex h-screen w-full max-w-[600px] flex-col justify-between overflow-hidden bg-background p-6">
+        <Card index={1} activeCard={activeCard} setActiveCard={setActiveCard} />
+        <Card
+          index={2}
+          activeCard={activeCard}
+          setActiveCard={setActiveCard}
+          className="bottom-[-60px]"
+        />
+        <Card
+          index={3}
+          activeCard={activeCard}
+          setActiveCard={setActiveCard}
+          className="bottom-[-120px]"
+        />
       </div>
     </MotionConfig>
   );
