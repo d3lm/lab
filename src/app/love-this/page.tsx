@@ -1,54 +1,58 @@
 import { LoveThis } from "./love-this";
 import imageInterstellar from "./interstellar.jpg";
+import imageHer from "./her.jpg";
 import imageMurph from "./murph.jpg";
+import imageScarlett from "./scarlett.jpg";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <main className="relative flex h-screen flex-col space-y-12 overflow-hidden bg-background p-14 pt-24 text-xl leading-relaxed">
       <Image
-        src={imageInterstellar}
+        src={imageHer}
         alt="Interstellar cover"
         placeholder="blur"
-        className="h-auto w-48 rounded-3xl drop-shadow-[0_0px_35px_rgba(72,117,129,0.4)]"
+        className="h-auto w-48 rounded-3xl drop-shadow-[0_0px_35px_rgba(346,91,41,0.4)]"
       />
 
       <div className="space-y-3">
-        <h1 className="text-4xl">Interstellar</h1>
+        <h1 className="text-4xl">Her</h1>
         <div className="flex gap-3">
-          <Image src={imageMurph} alt="Murph" className="size-8 rounded-full" />
-          <p className="font-medium">Murph</p>
-          <p className="text-muted-foreground">@jessicachastain</p>
+          <Image
+            src={imageScarlett}
+            alt="Scarlett"
+            className="size-8 rounded-full object-cover object-top"
+          />
+          <p className="font-medium">Samantha (Scarlett)</p>
+          <p className="text-muted-foreground">@scarlettjo</p>
         </div>
-        <p className="text-lg text-muted-foreground">October 26, 2014</p>
+        <p className="text-lg text-muted-foreground">December 18, 2013</p>
       </div>
 
       <div className="max-w-md space-y-8">
         <p>
-          Sometimes I just need to see the start. Or end. Or a trailer. Or the
-          music and theme from Hans Zimmer. Or the whole movie. Just to feel
-          that thing, I only get from this movie. That the earth, space and time
-          are something special, mystical.
+          Theodore is a lonely man in the final stages of his divorce. When he's
+          not working as a letter writer, his down time is spent playing video
+          games and occasionally hanging out with friends. He decides to
+          purchase the new OS1, which is advertised as the world's first
+          artificially intelligent operating system, "It's not just an operating
+          system, it's a consciousness," the ad states. Theodore quickly finds
+          himself drawn in with Samantha, the voice behind his OS1.
         </p>
         <p>
-          I never forget the first time I saw this movie, in an IMAX theatre in
-          2014. I was struck by it. Totally got me. And it stil does, 7 years
-          later. This is the best movie ever made for me. Because of the feeling
-          it gives me, no other movie can. So hard to get all of this emotion in
-          only one movie. Brilliant.
+          As they start spending time together they grow closer and closer and
+          eventually find themselves in love. Having fallen in love with his OS,
+          Theodore finds himself dealing with feelings of both great joy and
+          doubt. As an OS, Samantha has powerful intelligence that she uses to
+          help Theodore in ways others hadn't, but how does she help him deal
+          with his inner conflict of being in love with an OS?
         </p>
         <p>
-          In the near future around the American Midwest, Cooper, an ex-science
-          engineer and pilot, is tied to his farming land with his daughter
-          Murph and son Tom. As devastating sandstorms ravage Earth's crops, the
-          people of Earth realize their life here is coming to an end as food
-          begins to run out. Eventually stumbling upon a N.A.S.A. base 6 hours
-          from Cooper's home, he is asked to go on a daring mission with a few
-          other scientists into a wormhole because of Cooper's scientific
-          intellect and ability to pilot aircraft unlike the other crew members.
-          In order to find a new home while Earth decays, Cooper must decide to
-          either stay, or risk never seeing his children again in order to save
-          the human race by finding another habitable planet.
+          A great film about loneliness. Splendid performance of Joaquin
+          Phoenix. And pure poetry. Admirable poem about isolation, need of
+          other, social surogate and , off course, freedom. Its basic virtue -
+          the proposed questions creating perfect atmosphere , becoming inspired
+          challenges to discover new perspectives.
         </p>
       </div>
 
