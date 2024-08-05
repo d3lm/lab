@@ -65,7 +65,7 @@ function Card(props: {
         }}
         onMouseMove={handleMouse}
         className={cn(
-          "aspect-square overflow-hidden rounded-2xl bg-gray-300 text-background drop-shadow-[0_0_30px_rgba(0,0,0,0.1)] grayscale hover:grayscale-0",
+          "aspect-square overflow-hidden rounded-2xl bg-gray-300 text-background drop-shadow-[0_0_20px_rgba(0,0,0,0.0)] grayscale first:drop-shadow-[0_-50px_100px_rgba(0,0,0,0.1)] hover:grayscale-0",
           { "grayscale-0": props.activeCard === props.index },
           props.cardClassName,
         )}
@@ -93,13 +93,13 @@ export function Cards() {
           animate={{ scale: activeCard !== 0 ? 0.95 : 1 }}
           className="size-full"
         >
-          <div className="space-y-1">
+          <div className="mx-8 space-y-1">
             <p className="ml-1 pt-12 text-sm text-muted-foreground">2024</p>
             <h1 className="text-2xl font-semibold tracking-tight">
               July recap
             </h1>
           </div>
-          <div className="mx-8 mt-[72px] flex flex-col items-center justify-center space-y-2 whitespace-pre rounded-2xl bg-muted py-[72px] text-center">
+          <div className="mt-[72px] flex flex-col items-center justify-center space-y-2 whitespace-pre rounded-2xl bg-muted py-[72px] text-center">
             <p className="font-semibold">{`Thank you all for\nthe support`}</p>
             <Heart fill="hsl(var(--foreground))" className="h-auto w-[144px]" />
           </div>
