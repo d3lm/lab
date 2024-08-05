@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, MotionConfig, useMotionValue } from "framer-motion";
+import { motion, MotionConfig, useMotionValue, Variants } from "framer-motion";
 import * as React from "react";
 import { useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ function Card(props: {
   activeCard: number;
   setActiveCard: React.Dispatch<React.SetStateAction<number>>;
   src: string;
+  title: string;
 }) {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const x = useMotionValue(0.5);
@@ -31,6 +32,18 @@ function Card(props: {
     );
   }
 
+  const cardVariants: Variants = {
+    press: {
+      rotate: rotate.get() * (props.activeCard === props.index ? -1 : 1),
+      translateY:
+        translateY.get() * (props.activeCard === props.index ? -1 : 1),
+    },
+  };
+
+  const titleOverlayVariants: Variants = {
+    press: { opacity: props.activeCard === props.index ? 0 : 0.5 },
+  };
+
   return (
     <motion.div
       key={props.index}
@@ -41,16 +54,13 @@ function Card(props: {
             ? { translateY: 32 }
             : {}
       }
-      style={{ bottom: `-${(props.index + 0.6) * 72}px` }}
+      style={{ bottom: `-${(props.index + 0.3) * 72}px` }}
       className={cn("absolute left-0 w-full px-16", props.className)}
     >
       <motion.div
         key={props.index}
-        whileTap={{
-          rotate: rotate.get() * (props.activeCard === props.index ? -1 : 1),
-          translateY:
-            translateY.get() * (props.activeCard === props.index ? -1 : 1),
-        }}
+        whileTap={"press"}
+        variants={cardVariants}
         onClick={() =>
           props.setActiveCard((prevState) => {
             if (prevState === props.index) return 0;
@@ -65,7 +75,7 @@ function Card(props: {
         }}
         onMouseMove={handleMouse}
         className={cn(
-          "aspect-square overflow-hidden rounded-2xl bg-gray-300 text-background drop-shadow-[0_0_20px_rgba(0,0,0,0.0)] grayscale first:drop-shadow-[0_-50px_100px_rgba(0,0,0,0.1)] hover:grayscale-0",
+          "relative aspect-square overflow-hidden rounded-2xl bg-gray-300 text-background drop-shadow-[0_0_20px_rgba(0,0,0,0.0)] grayscale first:drop-shadow-[0_-50px_100px_rgba(0,0,0,0.075)] hover:grayscale-0",
           { "grayscale-0": props.activeCard === props.index },
           props.cardClassName,
         )}
@@ -77,6 +87,13 @@ function Card(props: {
           loop
           className="aspect-square"
         />
+        <motion.div
+          variants={titleOverlayVariants}
+          animate={{ opacity: props.activeCard !== props.index ? 1 : 0 }}
+          className="absolute top-0 h-[144px] w-full bg-gradient-to-b from-foreground/30 to-transparent"
+        >
+          <p className="select-none p-6 text-background">{props.title}</p>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
@@ -99,7 +116,7 @@ export function Cards() {
               July recap
             </h1>
           </div>
-          <div className="mt-[72px] flex flex-col items-center justify-center space-y-2 whitespace-pre rounded-2xl bg-muted py-[72px] text-center">
+          <div className="mt-[72px] flex flex-col items-center justify-center space-y-2 whitespace-pre rounded-2xl py-[72px] text-center">
             <p className="font-semibold">{`Thank you all for\nthe support`}</p>
             <Heart fill="hsl(var(--foreground))" className="h-auto w-[144px]" />
           </div>
@@ -110,12 +127,14 @@ export function Cards() {
         />
         <Card
           index={1}
+          title="Love This"
           src="/love-this/9-hours.mp4"
           activeCard={activeCard}
           setActiveCard={setActiveCard}
         />
         <Card
           index={2}
+          title="Figma navbar"
           src="/love-this/2.25-hours.mp4"
           activeCard={activeCard}
           setActiveCard={setActiveCard}
@@ -123,6 +142,7 @@ export function Cards() {
         />
         <Card
           index={3}
+          title="SimpleKit"
           src="/love-this/simple-kit.mp4"
           activeCard={activeCard}
           setActiveCard={setActiveCard}
@@ -130,6 +150,7 @@ export function Cards() {
         />
         <Card
           index={4}
+          title="Fade away cards"
           src="/love-this/fade-away.mp4"
           activeCard={activeCard}
           setActiveCard={setActiveCard}
@@ -137,6 +158,7 @@ export function Cards() {
         />
         <Card
           index={5}
+          title="Swap component"
           src="/love-this/swap-component.mp4"
           activeCard={activeCard}
           setActiveCard={setActiveCard}
