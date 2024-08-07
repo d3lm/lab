@@ -49,13 +49,13 @@ function Card(props: {
       key={props.index}
       animate={
         props.activeCard === props.index
-          ? { translateY: -500 + (props.index - 1) * -72 }
+          ? { translateY: -420 + (props.index - 1) * -72 }
           : props.activeCard !== 0
             ? { translateY: 32 }
             : {}
       }
-      style={{ bottom: `-${(props.index + 0.3) * 72}px` }}
-      className={cn("absolute left-0 w-full px-16", props.className)}
+      style={{ bottom: `-${props.index * 72}px` }}
+      className={cn("absolute left-0 w-full px-6", props.className)}
     >
       <motion.div
         key={props.index}
@@ -105,20 +105,33 @@ export function Cards() {
 
   return (
     <MotionConfig transition={{ duration: 0.6, type: "spring", bounce: 0.1 }}>
-      <div className="relative flex h-screen w-full max-w-[600px] flex-col justify-between overflow-hidden bg-background p-6">
+      <div className="relative flex h-screen w-full max-w-[472px] flex-col justify-between overflow-hidden bg-background p-6">
         <motion.div
           animate={{ scale: activeCard !== 0 ? 0.95 : 1 }}
           className="size-full"
         >
-          <div className="mx-8 space-y-1">
-            <p className="ml-1 pt-12 text-sm text-muted-foreground">2024</p>
-            <h1 className="text-2xl font-semibold tracking-tight">
-              July recap
-            </h1>
+          <div className="mx-8 space-y-2 pt-16">
+            <h1 className="text-3xl tracking-tight">July recap</h1>
+            <p className="ml-1 text-sm text-muted-foreground">2024</p>
           </div>
-          <div className="mt-[72px] flex flex-col items-center justify-center space-y-2 whitespace-pre rounded-2xl py-[72px] text-center">
-            <p className="font-semibold">{`Thank you all for\nthe support`}</p>
-            <Heart fill="hsl(var(--foreground))" className="h-auto w-[144px]" />
+          <div className="mx-8 mt-[96px] flex flex-col items-center justify-between gap-6 space-y-2 whitespace-pre rounded-3xl bg-background px-8 py-6 drop-shadow-[0_0_100px_rgba(0,0,0,0.075)]">
+            <div className="flex w-full justify-end">
+              <Heart
+                fill="rgb(252 165 165)"
+                className="h-auto w-9 text-red-300 drop-shadow-[0_1px_4px_rgba(0,0,0,0.05)]"
+              />
+            </div>
+            <div className="flex w-full justify-start">
+              <div className="space-y-2">
+                <p className="text-3xl">Thank you</p>
+                <p className="text-sm font-light">For all the support</p>
+              </div>
+            </div>
+            <div className="flex w-full justify-start">
+              <div className="rounded-full border bg-muted/80 px-8 py-2 text-[12px] drop-shadow-[0_1px_4px_rgba(0,0,0,0.05)] backdrop-blur-md">
+                480+ followers
+              </div>
+            </div>
           </div>
         </motion.div>
         <motion.div
