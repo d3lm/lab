@@ -105,7 +105,7 @@ export function Cards() {
 
   return (
     <MotionConfig transition={{ duration: 0.6, type: "spring", bounce: 0.1 }}>
-      <div className="relative flex h-screen w-full max-w-[472px] flex-col justify-between overflow-hidden bg-background p-6">
+      <div className="relative flex h-full w-full max-w-[472px] flex-col justify-between overflow-hidden bg-background p-6">
         <motion.div
           animate={{ scale: activeCard !== 0 ? 0.95 : 1 }}
           className="size-full"
