@@ -13,6 +13,33 @@ import { Heart, Images, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import styles from "./styles.module.css";
 
+const albums = [
+  {
+    time: "12:28",
+    year: "2022",
+    title: "Salt Lake City, Utah",
+    image: imageSaltFlats,
+  },
+  {
+    time: "14:58",
+    year: "2022",
+    title: "Tulum, Mexico",
+    image: imageMexico,
+  },
+  {
+    time: "09:10",
+    year: "2023",
+    title: "San Diego, California",
+    image: imageCouple,
+  },
+  {
+    time: "10:40",
+    year: "2023",
+    title: "Santorini, Greece",
+    image: imageBeach,
+  },
+];
+
 function AlbumCard(props: {
   image: StaticImageData;
   year: string;
@@ -74,7 +101,10 @@ function AlbumCard(props: {
       <div className="relative -mt-1 aspect-square w-full">
         <div className="relative translate-y-4">
           <Image src={imageCase} alt="CD case" className="relative z-10" />
-          <div className="absolute left-[42px] top-[14px] z-0 aspect-square w-4/5 overflow-hidden rounded-full drop-shadow-md">
+          <motion.div
+            layoutId={props.title + "album-record"}
+            className="absolute left-[42px] top-[14px] z-0 aspect-square w-4/5 overflow-hidden rounded-full drop-shadow-md"
+          >
             <Image
               src={props.image}
               alt={props.title}
@@ -83,7 +113,7 @@ function AlbumCard(props: {
             <div className="size-full absolute left-0 top-0 flex items-center justify-center backdrop-blur-[0.5px]">
               <div className="size-6 rounded-full bg-[#241b16] shadow" />
             </div>
-          </div>
+          </motion.div>
         </div>
         <div className="absolute bottom-7 left-1/2 h-12 w-2/3 -translate-x-1/2 rounded-t-lg bg-white/30 shadow-[0_-6px_6px_3px_rgba(0,0,0,0.06)] backdrop-blur-sm" />
         <div className="absolute bottom-0 left-0 h-6 w-full rounded-[2px] bg-gradient-to-br from-[#c1c1c1] from-20% to-[#929292] shadow-[0_-3px_8px_4px_rgba(0,0,0,0.15)] blur-[1px]" />
@@ -99,62 +129,62 @@ function AlbumCard(props: {
 
 function InnerContent() {
   const ctx = React.useContext(StagingContext);
+  const focusedCard = albums.find(
+    (album) => album.title === ctx.focusedCardTitle,
+  );
 
   return (
-    <div className="size-full text no-scrollbar relative space-y-8 overflow-y-scroll rounded-[44px] bg-[#dbdbdb] px-4 pb-40 pt-24 text-[#1b1b1b]">
+    <>
       <AnimatePresence>
-        {ctx.focusedCard !== "" && (
+        {ctx.focusedCardTitle !== "" && focusedCard && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            layoutId={ctx.focusedCard + "container"}
+            layoutId={ctx.focusedCardTitle + "container"}
             className="size-full fixed left-0 top-0 z-10 flex items-center justify-center rounded-[44px] bg-[#ececec]"
           >
-            <p>{ctx.focusedCard}</p>
+            <motion.div
+              layoutId={ctx.focusedCardTitle + "album-record"}
+              className="size-[248px] absolute z-0 aspect-square drop-shadow-md"
+            >
+              <Image
+                src={focusedCard.image}
+                alt={focusedCard.title}
+                className="size-full rounded-full object-cover  object-right shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1)]"
+              />
+              <div className="size-full absolute left-0 top-0 flex items-center justify-center backdrop-blur-[0.5px]">
+                <div className="size-6 rounded-full bg-[#241b16] shadow" />
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <AlbumCard
-        time="12:28"
-        year="2022"
-        title="Salt Lake City, Utah"
-        image={imageSaltFlats}
-      />
-      <AlbumCard
-        time="14:58"
-        year="2022"
-        title="Tulum, Mexico"
-        image={imageMexico}
-      />
-      <AlbumCard
-        time="09:10"
-        year="2023"
-        title="San Diego, California"
-        image={imageCouple}
-      />
-      <AlbumCard
-        time="10:40"
-        year="2023"
-        title="Santorini, Greece"
-        image={imageBeach}
-      />
-    </div>
+      <div className="size-full text no-scrollbar relative space-y-8 overflow-y-scroll rounded-[44px] bg-[#dbdbdb] px-4 pb-40 pt-24 text-[#1b1b1b]">
+        {albums.map((album) => (
+          <AlbumCard
+            time={album.time}
+            year={album.year}
+            title={album.title}
+            image={album.image}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 
 const StagingContext = React.createContext<{
   activeCard: string;
   setActiveCard: React.Dispatch<React.SetStateAction<string>>;
-  focusedCard: string;
+  focusedCardTitle: string;
   setFocusedCard: React.Dispatch<React.SetStateAction<string>>;
   showMenu: boolean;
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   activeCard: "",
   setActiveCard: () => null,
-  focusedCard: "",
+  focusedCardTitle: "",
   setFocusedCard: () => null,
   showMenu: false,
   setShowMenu: () => null,
@@ -162,7 +192,7 @@ const StagingContext = React.createContext<{
 
 export default function StagingPage() {
   const [activeCard, setActiveCard] = React.useState("");
-  const [focusedCard, setFocusedCard] = React.useState("");
+  const [focusedCardTitle, setFocusedCard] = React.useState("");
   const [showMenu, setShowMenu] = React.useState(false);
 
   React.useEffect(() => {
@@ -180,7 +210,7 @@ export default function StagingPage() {
       value={{
         activeCard,
         setActiveCard,
-        focusedCard,
+        focusedCardTitle,
         setFocusedCard,
         showMenu,
         setShowMenu,
@@ -189,7 +219,7 @@ export default function StagingPage() {
       <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.5 }}>
         <main className="flex h-screen items-center justify-center overflow-hidden">
           <div className="relative aspect-square h-screen bg-[#dbdbdb]">
-            <div className="absolute left-1/2 top-1/2 z-10 h-[817px] w-[375px] -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute left-1/2 top-1/2 z-10 h-[810px] w-[375px] -translate-x-1/2 -translate-y-1/2">
               <div className="pointer-events-none absolute -top-px z-10 h-28 w-full rounded-t-[44px] bg-gradient-to-b from-[#dbdbdb]/80 to-transparent" />
               <div
                 className={cn(
@@ -201,7 +231,7 @@ export default function StagingPage() {
               <InnerContent />
 
               <AnimatePresence>
-                {showMenu && (
+                {showMenu && focusedCardTitle === "" && (
                   <motion.div
                     initial={{
                       opacity: 0,
