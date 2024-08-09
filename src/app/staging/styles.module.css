@@ -1,0 +1,9 @@
+.blur-up {
+  mask: linear-gradient(to top, white 50%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.blur-down {
+  mask: linear-gradient(to bottom, black 50%, transparent);
+  backdrop-filter: blur(4px);
+}

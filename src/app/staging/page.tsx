@@ -1,21 +1,56 @@
+"use client";
+
 import Image, { type StaticImageData } from "next/image";
 import imageIphone from "./iphone.png";
 import imageCase from "./case.png";
+import imageSaltFlats from "./salt-flats.jpg";
+import imageMexico from "./mexico.jpg";
+import imageCouple from "./couple.jpg";
 import imageBeach from "./beach.jpg";
 import React from "react";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { Heart, Images, Search } from "lucide-react";
+import { cn } from "@/lib/utils";
+import styles from "./styles.module.css";
 
-function AlbumnCard(props: {
+function AlbumCard(props: {
   image: StaticImageData;
   year: string;
   title: string;
   time: string;
 }) {
+  const ctx = React.useContext(StagingContext);
+
+  React.useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        ctx.setFocusedCard("");
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [ctx.setFocusedCard]);
+
   return (
-    <div className="group rounded p-4 pb-5 transition-all duration-500 hover:bg-[#ececec] hover:shadow-[0_24px_24px_-12px_rgba(0,0,0,0.06)]">
+    <div
+      onMouseOver={() => ctx.setActiveCard(props.title)}
+      onClick={() => {
+        if (ctx.activeCard === props.title) {
+          ctx.setFocusedCard(props.title);
+          return;
+        }
+        ctx.setActiveCard(props.title);
+      }}
+      onMouseLeave={() => ctx.setActiveCard("")}
+      className="group rounded p-4 pb-5 transition-colors duration-500 hover:bg-[#ececec] hover:shadow-[0_24px_24px_-12px_rgba(0,0,0,0.06)]"
+    >
       <div className="space-y-3 font-mono text-[8px] font-medium uppercase opacity-0 transition-opacity duration-500 group-hover:opacity-100">
         <div>
           <p>
-            Albumn travelling time{" "}
+            Album travelling time{" "}
             <span className="font-black">{props.time}</span>
           </p>
           <p>
@@ -32,7 +67,7 @@ function AlbumnCard(props: {
           </p>
         </div>
         <div>
-          <p>Currated by Gabbi Soong</p>
+          <p>Currated by gabbi @glyphg0rl</p>
         </div>
       </div>
 
@@ -43,7 +78,7 @@ function AlbumnCard(props: {
             <Image
               src={props.image}
               alt={props.title}
-              className="size-full object-cover object-right"
+              className="size-full object-cover object-right shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1)]"
             />
             <div className="size-full absolute left-0 top-0 flex items-center justify-center backdrop-blur-[0.5px]">
               <div className="size-6 rounded-full bg-[#241b16] shadow" />
@@ -63,21 +98,43 @@ function AlbumnCard(props: {
 }
 
 function InnerContent() {
+  const ctx = React.useContext(StagingContext);
+
   return (
-    <div className="size-full text no-scrollbar space-y-8 overflow-y-scroll rounded-[44px] bg-[#dbdbdb] px-4 pb-40 pt-8 text-[#1b1b1b]">
-      <AlbumnCard
-        time="10:40"
-        year="2023"
-        title="Santorini, Greece"
-        image={imageBeach}
+    <div className="size-full text no-scrollbar relative space-y-8 overflow-y-scroll rounded-[44px] bg-[#dbdbdb] px-4 pb-40 pt-24 text-[#1b1b1b]">
+      <AnimatePresence>
+        {ctx.focusedCard !== "" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            layoutId={ctx.focusedCard + "container"}
+            className="size-full fixed left-0 top-0 z-10 flex items-center justify-center rounded-[44px] bg-[#ececec]"
+          >
+            <p>{ctx.focusedCard}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AlbumCard
+        time="12:28"
+        year="2022"
+        title="Salt Lake City, Utah"
+        image={imageSaltFlats}
       />
-      <AlbumnCard
-        time="10:40"
-        year="2023"
-        title="Santorini, Greece"
-        image={imageBeach}
+      <AlbumCard
+        time="14:58"
+        year="2022"
+        title="Tulum, Mexico"
+        image={imageMexico}
       />
-      <AlbumnCard
+      <AlbumCard
+        time="09:10"
+        year="2023"
+        title="San Diego, California"
+        image={imageCouple}
+      />
+      <AlbumCard
         time="10:40"
         year="2023"
         title="Santorini, Greece"
@@ -87,25 +144,122 @@ function InnerContent() {
   );
 }
 
+const StagingContext = React.createContext<{
+  activeCard: string;
+  setActiveCard: React.Dispatch<React.SetStateAction<string>>;
+  focusedCard: string;
+  setFocusedCard: React.Dispatch<React.SetStateAction<string>>;
+  showMenu: boolean;
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}>({
+  activeCard: "",
+  setActiveCard: () => null,
+  focusedCard: "",
+  setFocusedCard: () => null,
+  showMenu: false,
+  setShowMenu: () => null,
+});
+
 export default function StagingPage() {
+  const [activeCard, setActiveCard] = React.useState("");
+  const [focusedCard, setFocusedCard] = React.useState("");
+  const [showMenu, setShowMenu] = React.useState(false);
+
+  React.useEffect(() => {
+    if (activeCard !== "") {
+      const showTimeout = setTimeout(() => setShowMenu(true), 1000);
+      return () => clearTimeout(showTimeout);
+    }
+
+    const hideTimeout = setTimeout(() => setShowMenu(false), 1000);
+    return () => clearTimeout(hideTimeout);
+  }, [activeCard, setShowMenu]);
+
   return (
-    <main className="flex h-screen items-center justify-center">
-      <div className="relative aspect-square h-screen bg-[#dbdbdb]">
-        {/* <div className="absolute left-1/2 top-1/2 z-0 h-[893px] w-[412px] -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-pink-100"> */}
-        <div className="absolute left-1/2 top-1/2 z-10 h-[817px] w-[375px] -translate-x-1/2 -translate-y-1/2">
-          <InnerContent />
-        </div>
+    <StagingContext.Provider
+      value={{
+        activeCard,
+        setActiveCard,
+        focusedCard,
+        setFocusedCard,
+        showMenu,
+        setShowMenu,
+      }}
+    >
+      <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.5 }}>
+        <main className="flex h-screen items-center justify-center overflow-hidden">
+          <div className="relative aspect-square h-screen bg-[#dbdbdb]">
+            <div className="absolute left-1/2 top-1/2 z-10 h-[817px] w-[375px] -translate-x-1/2 -translate-y-1/2">
+              <div className="pointer-events-none absolute -top-px z-10 h-28 w-full rounded-t-[44px] bg-gradient-to-b from-[#dbdbdb]/80 to-transparent" />
+              <div
+                className={cn(
+                  styles["blur-down"],
+                  "pointer-events-none absolute -top-px z-10 h-20 w-full rounded-t-[44px]",
+                )}
+              />
 
-        <div className="fixed bottom-[72px] left-1/2 z-20 h-1.5 w-[360px] -translate-x-1/2 px-28">
-          <div className="size-full rounded-3xl bg-black" />
-        </div>
+              <InnerContent />
 
-        <Image
-          src={imageIphone}
-          alt="iphone mock"
-          className="absolute left-1/2 top-0 z-0 h-screen w-auto -translate-x-1/2"
-        />
-      </div>
-    </main>
+              <AnimatePresence>
+                {showMenu && (
+                  <motion.div
+                    initial={{
+                      opacity: 0,
+                      x: "-50%",
+                      y: 10,
+                      filter: "blur(6px)",
+                    }}
+                    animate={{
+                      opacity: 1,
+                      x: "-50%",
+                      y: 0,
+                      filter: "blur(0px)",
+                    }}
+                    exit={{
+                      opacity: 0,
+                      x: "-50%",
+                      y: 10,
+                      filter: "blur(6px)",
+                    }}
+                    className="absolute bottom-12 left-1/2 z-20 flex w-4/5 justify-between rounded-full bg-[#848484]/60 px-8 py-2 text-[12px] text-background shadow-[0_24px_24px_-12px_rgba(0,0,0,0.3)] backdrop-blur-md"
+                  >
+                    <div className="flex w-full flex-col items-center gap-1">
+                      <Heart className="size-5" />
+                      <p>From Friends</p>
+                    </div>
+                    <div className="flex w-full flex-col items-center gap-1">
+                      <Images className="size-5" />
+                      <p>My Albums</p>
+                    </div>
+                    <div className="flex w-full flex-col items-center gap-1">
+                      <Search className="size-5" />
+                      <p>Search</p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <div
+                className={cn(
+                  styles["blur-up"],
+                  "pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px]",
+                )}
+              />
+              <div className="pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px] bg-gradient-to-t from-[#dbdbdb]/80 from-10% to-transparent" />
+            </div>
+
+            <div className="fixed bottom-[72px] left-1/2 z-20 h-1.5 w-[360px] -translate-x-1/2 px-28">
+              <div className="size-full rounded-3xl bg-black" />
+            </div>
+
+            <Image
+              src={imageIphone}
+              alt="iphone mock"
+              className="absolute left-1/2 top-0 z-0 h-screen w-auto -translate-x-1/2"
+            />
+          </div>
+        </main>
+      </MotionConfig>
+    </StagingContext.Provider>
   );
 }
