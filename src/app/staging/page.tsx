@@ -15,9 +15,10 @@ import {
   useDragControls,
   useMotionValue,
 } from "framer-motion";
-import { Heart, Images, Search } from "lucide-react";
+import { Ellipsis, Heart, Images, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import styles from "./styles.module.css";
+import { Progress } from "@/components/ui/progress";
 
 const albums = [
   {
@@ -130,13 +131,15 @@ function InnerContent() {
   );
   const controls = useDragControls();
   const albumY = useMotionValue(0);
-  const [albumLoading, setAlbumLoading] = React.useState(false);
+  const [albumStatus, setAlbumStatus] = React.useState<
+    "idle" | "inserted" | "loading" | "done"
+  >("done");
 
   React.useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         ctx.setFocusedCard("");
-        setAlbumLoading(false);
+        setAlbumStatus("idle");
       }
     };
     window.addEventListener("keydown", handleEsc);
@@ -144,7 +147,18 @@ function InnerContent() {
     return () => {
       window.removeEventListener("keydown", handleEsc);
     };
-  }, [ctx.setFocusedCard, setAlbumLoading]);
+  }, [ctx.setFocusedCard, setAlbumStatus]);
+
+  React.useEffect(() => {
+    if (albumStatus === "inserted") {
+      const timeout = setTimeout(() => setAlbumStatus("loading"), 1000);
+      return () => clearTimeout(timeout);
+    }
+    if (albumStatus === "loading") {
+      const timeout = setTimeout(() => setAlbumStatus("done"), 2500);
+      return () => clearTimeout(timeout);
+    }
+  }, [albumStatus, setAlbumStatus]);
 
   return (
     <MotionConfig transition={{ duration: 0.4, type: "spring", bounce: 0 }}>
@@ -162,12 +176,113 @@ function InnerContent() {
               initial={{ opacity: 0, y: -40 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -40 }}
-              transition={{ delay: 0 }}
               className="absolute bottom-[310px] z-40 h-[400px] w-full px-12"
             >
+              <AnimatePresence>
+                {(albumStatus === "loading" || albumStatus === "done") && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute -top-8 left-0 flex w-full justify-center font-mono text-[12px] font-bold uppercase text-foreground/70"
+                  >
+                    {`${focusedCard.year} ${focusedCard.title}`}
+                  </motion.div>
+                )}
+              </AnimatePresence>
               <div className="size-full flex flex-col space-y-2 rounded-lg border border-background/20 bg-gradient-to-br from-[#ffffff] via-[#dcdcdc] to-[#ffffff] p-2 shadow-[0_12px_24px_-12px_rgba(0,0,0,0.2)] blur-[0.3px]">
-                <div className="flex-1 rounded bg-[#2c2c2c] shadow-[inset_0_6px_12px_rgba(0,0,0,1)]"></div>
-                <div className="h-1/5 w-full rounded bg-[#cecece] shadow-[inset_0_3px_6px_rgba(0,0,0,0.2)]"></div>
+                <div className="relative flex flex-1 items-center justify-center rounded bg-[#2c2c2c] shadow-[inset_0_6px_12px_rgba(0,0,0,1)]">
+                  <AnimatePresence mode="popLayout">
+                    {albumStatus === "loading" && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="p-4"
+                      >
+                        <div className="relative p-2">
+                          <div className="size-full absolute left-0 top-0 z-20 flex items-center justify-center rounded-full bg-gradient-to-br from-[#6a6a6e] from-10% via-[#ecedec] to-[#6a6a6e] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.2)] blur-[0.3px]" />
+                          <Image
+                            src={focusedCard.image}
+                            alt={focusedCard.title}
+                            className="size-full relative z-30 aspect-square animate-[spin_3s_linear_infinite] rounded-full object-cover object-right shadow-[0_6px_6px_-3px_rgba(0,0,0,0.2)]"
+                          />
+                          <div className="size-full absolute left-0 top-0 z-30 flex items-center justify-center backdrop-blur-[0.5px]">
+                            <div className="size-6 rounded-full bg-[#241b16] shadow" />
+                          </div>
+                        </div>
+                        <div className="size-full absolute left-0 top-0 z-40 bg-gradient-to-b from-[#dbdbdb]/60 to-[#dbdbdb]/10" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  <AnimatePresence mode="popLayout">
+                    {albumStatus === "done" && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="size-full relative"
+                      >
+                        <Image
+                          src={focusedCard.image}
+                          alt={focusedCard.title}
+                          className="size-full object-cover"
+                        />
+
+                        <div className="size-full absolute left-0 top-0 rounded shadow-[inset_0_6px_12px_rgba(0,0,0,0.2)]" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <div
+                  className={cn(
+                    "flex h-1/5 w-full items-center justify-center rounded bg-[#cecece] p-3 text-sm shadow-[inset_0_3px_6px_rgba(0,0,0,0.2)]",
+                    {
+                      "items-start": albumStatus === "done",
+                    },
+                  )}
+                >
+                  <AnimatePresence>
+                    {albumStatus === "loading" ? (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="flex flex-col items-center gap-1.5 font-mono text-[12px] font-bold uppercase text-foreground/70"
+                      >
+                        Loading
+                        <div className="flex items-center gap-1">
+                          <div className="size-[3px] rounded-full bg-foreground" />
+                          <div className="size-[3px] rounded-full bg-foreground" />
+                          <div className="size-[3px] rounded-full bg-foreground" />
+                        </div>
+                      </motion.div>
+                    ) : albumStatus === "done" ? (
+                      <div className="flex w-full flex-col">
+                        <div className="flex w-full items-start justify-between">
+                          <div className="leading-none">
+                            <p className="font-semibold">Dominoes</p>
+                            <p>Jungle</p>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Heart className="size-3" />
+                            <Ellipsis className="size-3" />
+                          </div>
+                        </div>
+
+                        <Progress
+                          value={33}
+                          className="mt-2 h-1 bg-[#b1afb1]"
+                        />
+
+                        <div className="flex w-full items-center justify-between text-[8px]">
+                          <p>0 : 35</p>
+                          <p>-2 : 44</p>
+                        </div>
+                      </div>
+                    ) : null}
+                  </AnimatePresence>
+                </div>
               </div>
             </motion.div>
 
@@ -178,7 +293,7 @@ function InnerContent() {
                 initial={{ filter: "blur(6px)" }}
                 exit={{ filter: "blur(6px)" }}
                 animate={
-                  albumLoading
+                  albumStatus !== "idle"
                     ? {
                       bottom: 320,
                       filter: "blur(2px)",
@@ -200,7 +315,7 @@ function InnerContent() {
                 dragListener={false}
                 onDragEnd={() => {
                   if (albumY.get() <= -130) {
-                    setAlbumLoading(true);
+                    setAlbumStatus("inserted");
                   }
                 }}
                 className="size-[240px] absolute bottom-20 z-30 flex flex-col items-center border border-background/20 bg-gradient-to-br from-[#cacaca] from-10% via-[#eeeeee] to-[#dfdfdf] p-4 shadow-inner blur-[0.3px] drop-shadow-md"
@@ -290,23 +405,13 @@ export default function StagingPage() {
         <main className="flex h-screen items-center justify-center overflow-hidden">
           <div className="relative aspect-square h-screen bg-[#dbdbdb]">
             <div className="absolute left-1/2 top-1/2 z-10 h-[810px] w-[375px] -translate-x-1/2 -translate-y-1/2">
-              <AnimatePresence initial={false}>
-                {focusedCardTitle === "" && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <div className="pointer-events-none absolute -top-px z-10 h-28 w-full rounded-t-[44px] bg-gradient-to-b from-[#dbdbdb]/80 to-transparent" />
-                    <div
-                      className={cn(
-                        styles["blur-down"],
-                        "pointer-events-none absolute -top-px z-10 h-20 w-full rounded-t-[44px]",
-                      )}
-                    />
-                  </motion.div>
+              <div className="pointer-events-none absolute -top-px z-40 h-28 w-full rounded-t-[44px] bg-gradient-to-b from-[#dbdbdb]/80 to-transparent" />
+              <div
+                className={cn(
+                  styles["blur-down"],
+                  "pointer-events-none absolute -top-px z-40 h-20 w-full rounded-t-[44px]",
                 )}
-              </AnimatePresence>
+              />
 
               <InnerContent />
 
@@ -349,26 +454,16 @@ export default function StagingPage() {
                 )}
               </AnimatePresence>
 
-              <AnimatePresence initial={false}>
-                {focusedCardTitle === "" && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  >
-                    <div
-                      className={cn(
-                        styles["blur-up"],
-                        "pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px]",
-                      )}
-                    />
-                    <div className="pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px] bg-gradient-to-t from-[#dbdbdb]/80 from-10% to-transparent" />
-                  </motion.div>
+              <div
+                className={cn(
+                  styles["blur-up"],
+                  "pointer-events-none absolute -bottom-px z-10 h-20 w-full rounded-b-[44px]",
                 )}
-              </AnimatePresence>
+              />
+              <div className="pointer-events-none absolute -bottom-px z-10 h-28 w-full rounded-b-[44px] bg-gradient-to-t from-[#dbdbdb]/80 from-10% to-transparent" />
             </div>
 
-            <div className="fixed bottom-[72px] left-1/2 z-20 h-1.5 w-[360px] -translate-x-1/2 px-28">
+            <div className="fixed bottom-[72px] left-1/2 z-50 h-1.5 w-[360px] -translate-x-1/2 px-28">
               <div className="size-full rounded-3xl bg-black" />
             </div>
 
