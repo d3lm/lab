@@ -8,7 +8,13 @@ import imageMexico from "./mexico.jpg";
 import imageCouple from "./couple.jpg";
 import imageBeach from "./beach.jpg";
 import React from "react";
-import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  MotionConfig,
+  useDragControls,
+  useMotionValue,
+} from "framer-motion";
 import { Heart, Images, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import styles from "./styles.module.css";
@@ -48,19 +54,6 @@ function AlbumCard(props: {
 }) {
   const ctx = React.useContext(StagingContext);
 
-  React.useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        ctx.setFocusedCard("");
-      }
-    };
-    window.addEventListener("keydown", handleEsc);
-
-    return () => {
-      window.removeEventListener("keydown", handleEsc);
-    };
-  }, [ctx.setFocusedCard]);
-
   return (
     <div
       onMouseOver={() => ctx.setActiveCard(props.title)}
@@ -98,12 +91,15 @@ function AlbumCard(props: {
         </div>
       </div>
 
-      <div className="relative -mt-1 aspect-square w-full">
-        <div className="relative translate-y-4">
+      <motion.div
+        layoutId={props.title + "album-wrapper"}
+        className="relative -mt-1 aspect-square w-full"
+      >
+        <motion.div className="relative translate-y-4">
           <Image src={imageCase} alt="CD case" className="relative z-10" />
           <motion.div
-            layoutId={props.title + "album-record"}
-            className="absolute left-[42px] top-[14px] z-0 aspect-square w-4/5 overflow-hidden rounded-full drop-shadow-md"
+            // layoutId={props.title + "album-record"}
+            className="absolute left-[42px] top-[14px] z-40 aspect-square w-4/5 overflow-hidden rounded-full drop-shadow-md"
           >
             <Image
               src={props.image}
@@ -114,10 +110,10 @@ function AlbumCard(props: {
               <div className="size-6 rounded-full bg-[#241b16] shadow" />
             </div>
           </motion.div>
-        </div>
+        </motion.div>
         <div className="absolute bottom-7 left-1/2 h-12 w-2/3 -translate-x-1/2 rounded-t-lg bg-white/30 shadow-[0_-6px_6px_3px_rgba(0,0,0,0.06)] backdrop-blur-sm" />
-        <div className="absolute bottom-0 left-0 h-6 w-full rounded-[2px] bg-gradient-to-br from-[#c1c1c1] from-20% to-[#929292] shadow-[0_-3px_8px_4px_rgba(0,0,0,0.15)] blur-[1px]" />
-      </div>
+        <div className="absolute bottom-0 left-0 h-6 w-full rounded-[2px] bg-gradient-to-br from-[#c1c1c1] from-20% to-[#929292] shadow-[0_-3px_8px_4px_rgba(0,0,0,0.15)] blur-[0.3px]" />
+      </motion.div>
 
       <h3 className="pt-4 text-xl tracking-tight opacity-0 transition-opacity duration-500 group-hover:opacity-100">
         <span className="pr-[1ch] font-bold">{props.year}</span>
@@ -132,34 +128,105 @@ function InnerContent() {
   const focusedCard = albums.find(
     (album) => album.title === ctx.focusedCardTitle,
   );
+  const controls = useDragControls();
+  const albumY = useMotionValue(0);
+  const [albumLoading, setAlbumLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        ctx.setFocusedCard("");
+        setAlbumLoading(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [ctx.setFocusedCard, setAlbumLoading]);
 
   return (
-    <>
-      <AnimatePresence>
+    <MotionConfig transition={{ duration: 0.4, type: "spring", bounce: 0 }}>
+      <AnimatePresence initial={false}>
         {ctx.focusedCardTitle !== "" && focusedCard && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            layoutId={ctx.focusedCardTitle + "container"}
-            className="size-full fixed left-0 top-0 z-10 flex items-center justify-center rounded-[44px] bg-[#ececec]"
-          >
+          <>
             <motion.div
-              layoutId={ctx.focusedCardTitle + "album-record"}
-              className="size-[248px] absolute z-0 aspect-square drop-shadow-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              layoutId={ctx.focusedCardTitle + "container"}
+              className="size-full fixed left-0 top-0 z-10 flex items-center justify-center overflow-hidden rounded-[44px] bg-[#ececec]"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ delay: 0 }}
+              className="absolute bottom-[310px] z-40 h-[400px] w-full px-12"
             >
-              <Image
-                src={focusedCard.image}
-                alt={focusedCard.title}
-                className="size-full rounded-full object-cover  object-right shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1)]"
-              />
-              <div className="size-full absolute left-0 top-0 flex items-center justify-center backdrop-blur-[0.5px]">
-                <div className="size-6 rounded-full bg-[#241b16] shadow" />
+              <div className="size-full flex flex-col space-y-2 rounded-lg border border-background/20 bg-gradient-to-br from-[#ffffff] via-[#dcdcdc] to-[#ffffff] p-2 shadow-[0_12px_24px_-12px_rgba(0,0,0,0.2)] blur-[0.3px]">
+                <div className="flex-1 rounded bg-[#2c2c2c] shadow-[inset_0_6px_12px_rgba(0,0,0,1)]"></div>
+                <div className="h-1/5 w-full rounded bg-[#cecece] shadow-[inset_0_3px_6px_rgba(0,0,0,0.2)]"></div>
               </div>
             </motion.div>
-          </motion.div>
+
+            <div className="size-full fixed left-0 top-0 z-10 flex items-center justify-center overflow-hidden rounded-[44px]">
+              <motion.div
+                layoutId={ctx.focusedCardTitle + "album-wrapper"}
+                transition={{ delay: 0 }}
+                initial={{ filter: "blur(6px)" }}
+                exit={{ filter: "blur(6px)" }}
+                animate={
+                  albumLoading
+                    ? {
+                      bottom: 320,
+                      filter: "blur(2px)",
+                      transition: { duration: 0.4 },
+                    }
+                    : { filter: "blur(0px)" }
+                }
+                style={{ y: albumY }}
+                drag="y"
+                dragControls={controls}
+                dragConstraints={{
+                  top: 0,
+                  bottom: 0,
+                }}
+                dragElastic={{
+                  bottom: 0,
+                  top: 0.8,
+                }}
+                dragListener={false}
+                onDragEnd={() => {
+                  if (albumY.get() <= -130) {
+                    setAlbumLoading(true);
+                  }
+                }}
+                className="size-[240px] absolute bottom-20 z-30 flex flex-col items-center border border-background/20 bg-gradient-to-br from-[#cacaca] from-10% via-[#eeeeee] to-[#dfdfdf] p-4 shadow-inner blur-[0.3px] drop-shadow-md"
+              >
+                <div className="relative p-2">
+                  <div className="size-full absolute left-0 top-0 z-20 flex items-center justify-center rounded-full bg-gradient-to-br from-[#6a6a6e] from-10% via-[#ecedec] to-[#6a6a6e] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.2)] blur-[0.3px]" />
+                  <Image
+                    src={focusedCard.image}
+                    alt={focusedCard.title}
+                    className="size-full relative z-30 aspect-square rounded-full object-cover object-right shadow-[0_6px_6px_-3px_rgba(0,0,0,0.2)]"
+                  />
+                  <div className="size-full absolute left-0 top-0 z-30 flex items-center justify-center backdrop-blur-[0.5px]">
+                    <div className="size-6 rounded-full bg-[#241b16] shadow" />
+                  </div>
+                </div>
+                <button
+                  onPointerDown={(e) => controls.start(e)}
+                  style={{ touchAction: "none" }}
+                  className="absolute bottom-1 h-1 w-10 rounded-full bg-[#bbbbbb] shadow-md"
+                />
+              </motion.div>
+            </div>
+          </>
         )}
       </AnimatePresence>
+
       <div className="size-full text no-scrollbar relative space-y-8 overflow-y-scroll rounded-[44px] bg-[#dbdbdb] px-4 pb-40 pt-24 text-[#1b1b1b]">
         {albums.map((album) => (
           <AlbumCard
@@ -170,7 +237,7 @@ function InnerContent() {
           />
         ))}
       </div>
-    </>
+    </MotionConfig>
   );
 }
 
@@ -192,7 +259,10 @@ const StagingContext = React.createContext<{
 
 export default function StagingPage() {
   const [activeCard, setActiveCard] = React.useState("");
-  const [focusedCardTitle, setFocusedCard] = React.useState("");
+  // const [focusedCardTitle, setFocusedCard] = React.useState("");
+  const [focusedCardTitle, setFocusedCard] = React.useState(
+    "Salt Lake City, Utah",
+  );
   const [showMenu, setShowMenu] = React.useState(false);
 
   React.useEffect(() => {
@@ -220,13 +290,23 @@ export default function StagingPage() {
         <main className="flex h-screen items-center justify-center overflow-hidden">
           <div className="relative aspect-square h-screen bg-[#dbdbdb]">
             <div className="absolute left-1/2 top-1/2 z-10 h-[810px] w-[375px] -translate-x-1/2 -translate-y-1/2">
-              <div className="pointer-events-none absolute -top-px z-10 h-28 w-full rounded-t-[44px] bg-gradient-to-b from-[#dbdbdb]/80 to-transparent" />
-              <div
-                className={cn(
-                  styles["blur-down"],
-                  "pointer-events-none absolute -top-px z-10 h-20 w-full rounded-t-[44px]",
+              <AnimatePresence initial={false}>
+                {focusedCardTitle === "" && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div className="pointer-events-none absolute -top-px z-10 h-28 w-full rounded-t-[44px] bg-gradient-to-b from-[#dbdbdb]/80 to-transparent" />
+                    <div
+                      className={cn(
+                        styles["blur-down"],
+                        "pointer-events-none absolute -top-px z-10 h-20 w-full rounded-t-[44px]",
+                      )}
+                    />
+                  </motion.div>
                 )}
-              />
+              </AnimatePresence>
 
               <InnerContent />
 
@@ -269,13 +349,23 @@ export default function StagingPage() {
                 )}
               </AnimatePresence>
 
-              <div
-                className={cn(
-                  styles["blur-up"],
-                  "pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px]",
+              <AnimatePresence initial={false}>
+                {focusedCardTitle === "" && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div
+                      className={cn(
+                        styles["blur-up"],
+                        "pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px]",
+                      )}
+                    />
+                    <div className="pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px] bg-gradient-to-t from-[#dbdbdb]/80 from-10% to-transparent" />
+                  </motion.div>
                 )}
-              />
-              <div className="pointer-events-none absolute -bottom-px z-10 h-40 w-full rounded-b-[44px] bg-gradient-to-t from-[#dbdbdb]/80 from-10% to-transparent" />
+              </AnimatePresence>
             </div>
 
             <div className="fixed bottom-[72px] left-1/2 z-20 h-1.5 w-[360px] -translate-x-1/2 px-28">
