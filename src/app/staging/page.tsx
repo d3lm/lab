@@ -482,10 +482,10 @@ const StagingContext = React.createContext<{
 
 export default function StagingPage() {
   const [activeCard, setActiveCard] = React.useState("");
-  // const [focusedCardTitle, setFocusedCard] = React.useState("");
-  const [focusedCardTitle, setFocusedCard] = React.useState(
-    "Salt Lake City, Utah",
-  );
+  const [focusedCardTitle, setFocusedCard] = React.useState("");
+  // const [focusedCardTitle, setFocusedCard] = React.useState(
+  //   "Salt Lake City, Utah",
+  // );
   const [showMenu, setShowMenu] = React.useState(false);
 
   React.useEffect(() => {
