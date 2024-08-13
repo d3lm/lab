@@ -7,6 +7,7 @@ import imageSaltFlats from "./salt-flats.jpg";
 import imageMexico from "./mexico.jpg";
 import imageCouple from "./couple.jpg";
 import imageBeach from "./beach.jpg";
+import svgPhone from "./iphone-gold.svg";
 import React from "react";
 import {
   AnimatePresence,
@@ -511,7 +512,7 @@ export default function StagingPage() {
     >
       <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.5 }}>
         <main className="flex h-screen select-none items-center justify-center overflow-hidden">
-          <div className="relative aspect-square h-screen bg-[#dbdbdb]">
+          <div className="relative flex aspect-square h-screen items-center justify-center bg-gradient-to-br from-[#FAF9F2]/70 to-[#F2F0E7]">
             <div className="absolute left-1/2 top-1/2 z-10 h-[810px] w-[375px] -translate-x-1/2 -translate-y-1/2">
               <div className="pointer-events-none absolute -top-px z-40 h-28 w-full rounded-t-[44px] bg-gradient-to-b from-[#dbdbdb]/80 to-transparent" />
               <div
@@ -576,9 +577,9 @@ export default function StagingPage() {
             </div>
 
             <Image
-              src={imageIphone}
+              src={svgPhone}
               alt="iphone mock"
-              className="absolute left-1/2 top-0 z-0 h-screen w-auto -translate-x-1/2"
+              className="pointer-events-none relative z-50"
             />
           </div>
         </main>
