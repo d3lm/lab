@@ -25,6 +25,7 @@ function ToolbarButton(props: {
       onClick={() => ctx.setActive(props.id)}
       className="flex items-center justify-center overflow-hidden rounded-[10px] px-2 py-1.5 text-sm text-white transition-colors duration-150 ease-out hover:bg-white/5 hover:text-[#B7FE05]"
     >
+      {props.children}
       <motion.span
         key={props.id}
         initial={{ width: 0, opacity: 0 }}
@@ -46,7 +47,7 @@ export function UIToolbar() {
 
   return (
     <ToolbarContext.Provider value={{ active, setActive }}>
-      <div className="flex items-center gap-1.5 rounded-2xl bg-black/90 p-1.5">
+      <div className="flex items-center gap-1.5 rounded-2xl bg-black/90 p-1.5 shadow-[0_16px_32px_-8px_rgba(0,0,0,0.24)]">
         <div className="flex items-center">
           <ToolbarButton id="crop" title="Crop">
             <svg
