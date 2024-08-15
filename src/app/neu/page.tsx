@@ -2,16 +2,18 @@
 
 import { cn } from "@/lib/utils";
 import styles from "./styles.module.css";
-import { Italic, Link, Underline } from "@/components/icons";
+import { Italic, Underline } from "@/components/icons";
 import { AlignLeft, AlignCenter, AlignRight } from "lucide-react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import useMeasure from "react-use-measure";
 
 export default function NeuToolbarPage() {
   const [value, setValue] = React.useState("Heading 1");
   const [open, setOpen] = React.useState(false);
   const [hovered, setHovered] = React.useState("");
+  const [ref, bounds] = useMeasure();
 
   const tabs = [
     {
@@ -46,10 +48,25 @@ export default function NeuToolbarPage() {
     },
   ];
 
+  const selectItem = {
+    hidden: {
+      opacity: 0,
+      filter: "blur(4px)",
+    },
+    show: {
+      opacity: 1,
+      filter: "blur(0px)",
+    },
+    exit: {
+      opacity: 0,
+      filter: "blur(4px)",
+    },
+  };
+
   return (
     <main
       onClick={() => setHovered("")}
-      className="flex h-screen items-center justify-center space-x-6 bg-[#393b3a] text-[#b1b1b1]"
+      className="flex h-screen items-center justify-center space-x-6 bg-[#fafafa] text-[hsl(0,0%,69%)]"
     >
       <div className="flex flex-col items-center gap-8">
         <div
@@ -62,6 +79,7 @@ export default function NeuToolbarPage() {
             <DropdownMenu.Trigger asChild>
               <motion.button
                 data-open={open}
+                onClick={() => setOpen((prevState) => !prevState)}
                 className={cn(
                   styles["drop-down-trigger"],
                   "z-10 flex h-12 w-36 items-center justify-center rounded-2xl px-8 font-semibold transition-all",
@@ -71,51 +89,108 @@ export default function NeuToolbarPage() {
               </motion.button>
             </DropdownMenu.Trigger>
 
-            <AnimatePresence initial={false}>
-              {open && (
-                <DropdownMenu.Portal forceMount>
-                  <DropdownMenu.Content sideOffset={-48} align="start" asChild>
+            <MotionConfig transition={{ duration: 0.4 }}>
+              <DropdownMenu.Portal forceMount>
+                <DropdownMenu.Content sideOffset={-48} align="start" asChild>
+                  <AnimatePresence initial={false}>
                     <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
+                      animate={{ height: bounds.height }}
                       className={cn(
                         styles["drop-down"],
-                        "z-0 flex w-36 flex-col gap-2 rounded-2xl px-2 pb-2 pt-14",
+                        "z-0 w-36 rounded-2xl",
                       )}
                     >
-                      <DropdownMenu.Item
-                        onClick={() => setValue("Heading 1")}
-                        className={cn(
-                          styles["drop-down-button"],
-                          "flex h-10 w-full cursor-pointer items-center justify-center rounded-2xl font-semibold text-[#b1b1b1] transition-all",
-                        )}
+                      <motion.div
+                        ref={ref}
+                        className="flex flex-col gap-2 px-2 pb-2 pt-2"
                       >
-                        Heading 1
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item
-                        onClick={() => setValue("Heading 2")}
-                        className={cn(
-                          styles["drop-down-button"],
-                          "flex h-10 w-full cursor-pointer items-center justify-center rounded-2xl font-semibold text-[#b1b1b1] transition-all",
-                        )}
-                      >
-                        Heading 2
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item
-                        onClick={() => setValue("Heading 3")}
-                        className={cn(
-                          styles["drop-down-button"],
-                          "flex h-10 w-full cursor-pointer items-center justify-center rounded-2xl font-semibold text-[#b1b1b1] transition-all",
-                        )}
-                      >
-                        Heading 3
-                      </DropdownMenu.Item>
+                        <AnimatePresence initial={false}>
+                          {open && (
+                            <>
+                              <div className="h-10 w-full" />
+                              <DropdownMenu.Item asChild>
+                                <motion.div
+                                  initial={{
+                                    opacity: 0,
+                                    filter: "blur(4px)",
+                                  }}
+                                  animate={{
+                                    opacity: 1,
+                                    filter: "blur(0px)",
+                                  }}
+                                  exit={{
+                                    opacity: 0,
+                                    filter: "blur(4px)",
+                                    transition: { delay: 0.2, duration: 0.2 },
+                                  }}
+                                  onClick={() => setValue("Heading 1")}
+                                  className={cn(
+                                    styles["drop-down-button"],
+                                    "flex h-10 w-full cursor-pointer items-center justify-center rounded-lg font-semibold text-[#fafafa] transition-all",
+                                  )}
+                                >
+                                  Heading 1
+                                </motion.div>
+                              </DropdownMenu.Item>
+                              <DropdownMenu.Item asChild>
+                                <motion.div
+                                  initial={{
+                                    opacity: 0,
+                                    filter: "blur(4px)",
+                                  }}
+                                  animate={{
+                                    opacity: 1,
+                                    filter: "blur(0px)",
+                                  }}
+                                  exit={{
+                                    opacity: 0,
+                                    filter: "blur(4px)",
+                                    transition: { delay: 0.1, duration: 0.2 },
+                                  }}
+                                  transition={{ delay: 0.1 }}
+                                  onClick={() => setValue("Heading 2")}
+                                  className={cn(
+                                    styles["drop-down-button"],
+                                    "flex h-10 w-full cursor-pointer items-center justify-center rounded-lg font-semibold text-[#fafafa] transition-all",
+                                  )}
+                                >
+                                  Heading 2
+                                </motion.div>
+                              </DropdownMenu.Item>
+                              <DropdownMenu.Item asChild>
+                                <motion.div
+                                  transition={{ delay: 0.2 }}
+                                  initial={{
+                                    opacity: 0,
+                                    filter: "blur(4px)",
+                                  }}
+                                  animate={{
+                                    opacity: 1,
+                                    filter: "blur(0px)",
+                                  }}
+                                  exit={{
+                                    opacity: 0,
+                                    filter: "blur(4px)",
+                                    transition: { delay: 0, duration: 0.2 },
+                                  }}
+                                  onClick={() => setValue("Heading 3")}
+                                  className={cn(
+                                    styles["drop-down-button"],
+                                    "flex h-10 w-full cursor-pointer items-center justify-center rounded-lg font-semibold text-[#fafafa] transition-all",
+                                  )}
+                                >
+                                  Heading 3
+                                </motion.div>
+                              </DropdownMenu.Item>
+                            </>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
                     </motion.div>
-                  </DropdownMenu.Content>
-                </DropdownMenu.Portal>
-              )}
-            </AnimatePresence>
+                  </AnimatePresence>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </MotionConfig>
           </DropdownMenu.Root>
 
           {tabs.map((tab) => (
@@ -144,7 +219,7 @@ export default function NeuToolbarPage() {
           ))}
         </div>
 
-        <div className="relative max-w-xl px-12 text-xl leading-relaxed">
+        <div className="relative max-w-xl px-12 text-xl leading-relaxed text-[#393b3a]">
           <p>
             Been playing with neumorphism design after seeing some of the
             talented work of @tranmautritam. You should go check out his work.
@@ -153,7 +228,7 @@ export default function NeuToolbarPage() {
             menu is a Radix UI component and everything is styled with a mix of
             CSS and Tailwind.
           </p>
-          <div className="size-full absolute left-0 top-0 bg-gradient-to-t from-[#393b3a]/90 to-transparent" />
+          <div className="size-full absolute left-0 top-0 bg-gradient-to-t from-[#fafafa]/90 to-transparent" />
         </div>
       </div>
     </main>
