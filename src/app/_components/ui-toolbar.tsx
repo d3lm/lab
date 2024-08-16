@@ -111,14 +111,12 @@ export function UIToolbar() {
     <ToolbarContext.Provider
       value={{ active, setActive, activeIndex, setActiveIndex }}
     >
-      <MotionConfig
-        transition={{ type: "spring", bounce: 0.35, duration: 0.7 }}
-      >
+      <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.6 }}>
         <div
           className="flex items-center overflow-hidden rounded-[12px]"
-          style={{
-            filter: "url(#goo)",
-          }}
+        // style={{
+        //   filter: "url(#goo)",
+        // }}
         >
           {/* <div className="flex items-center"> */}
           <ToolbarButton index={1} id="crop" title="Crop">
