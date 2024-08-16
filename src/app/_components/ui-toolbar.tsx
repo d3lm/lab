@@ -1,15 +1,24 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 const ToolbarContext = React.createContext<{
   active: string;
   setActive: React.Dispatch<React.SetStateAction<string>>;
-}>({ active: "", setActive: () => null });
+  activeIndex: number;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
+}>({
+  active: "",
+  setActive: () => null,
+  activeIndex: -1,
+  setActiveIndex: () => -1,
+});
 
 function ToolbarButton(props: {
   id: string;
+  index: number;
   title: string;
   children: React.ReactNode;
 }) {
@@ -19,11 +28,48 @@ function ToolbarButton(props: {
   return (
     <motion.button
       key={props.id}
-      animate={{ gap: isActive ? "6px" : 0 }}
+      whileTap={{
+        paddingLeft: "12px",
+        paddingRight: "12px",
+      }}
+      animate={{
+        gap: isActive ? "6px" : "0px",
+        marginLeft: isActive ? "12px" : "0px",
+        marginRight: isActive ? "12px" : "0px",
+        borderTopLeftRadius:
+          props.index === 1 || isActive
+            ? "12px"
+            : ctx.activeIndex === props.index - 1
+              ? "12px"
+              : "0px",
+        borderBottomLeftRadius:
+          props.index === 1 || isActive
+            ? "12px"
+            : ctx.activeIndex === props.index - 1
+              ? "12px"
+              : "0px",
+        borderTopRightRadius:
+          props.index === 5 || isActive
+            ? "12px"
+            : ctx.activeIndex === props.index + 1
+              ? "12px"
+              : "0px",
+        borderBottomRightRadius:
+          props.index === 5 || isActive
+            ? "12px"
+            : ctx.activeIndex === props.index + 1
+              ? "12px"
+              : "0px",
+      }}
       type="button"
       aria-label={props.title}
-      onClick={() => ctx.setActive(props.id)}
-      className="flex items-center justify-center overflow-hidden rounded-[10px] px-2 py-1.5 text-sm text-white transition-colors duration-150 ease-out hover:bg-white/5 hover:text-[#B7FE05]"
+      onClick={() => {
+        ctx.setActive(props.id);
+        ctx.setActiveIndex(props.index);
+      }}
+      className={cn(
+        "flex items-center justify-center overflow-hidden bg-black/90 px-2 py-1.5 text-sm text-white shadow-[0_12px_12px_-6px_rgba(0,0,0,0.0)] transition-colors duration-150 ease-out hover:bg-black/90 hover:text-[#B7FE05]",
+      )}
     >
       {props.children}
       <motion.span
@@ -44,12 +90,38 @@ function ToolbarButton(props: {
 
 export function UIToolbar() {
   const [active, setActive] = React.useState<string>("");
+  const [activeIndex, setActiveIndex] = React.useState<number>(-1);
+
+  React.useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActive("");
+        setActiveIndex(-1);
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [setActive]);
 
   return (
-    <ToolbarContext.Provider value={{ active, setActive }}>
-      <div className="flex items-center gap-1.5 rounded-2xl bg-black/90 p-1.5 shadow-[0_16px_32px_-8px_rgba(0,0,0,0.24)]">
-        <div className="flex items-center">
-          <ToolbarButton id="crop" title="Crop">
+    <ToolbarContext.Provider
+      value={{ active, setActive, activeIndex, setActiveIndex }}
+    >
+      <MotionConfig
+        transition={{ type: "spring", bounce: 0.35, duration: 0.7 }}
+      >
+        <div
+          className="flex items-center overflow-hidden rounded-[12px]"
+          style={{
+            filter: "url(#goo)",
+          }}
+        >
+          {/* <div className="flex items-center"> */}
+          <ToolbarButton index={1} id="crop" title="Crop">
             <svg
               width="20"
               height="20"
@@ -65,7 +137,7 @@ export function UIToolbar() {
               />
             </svg>
           </ToolbarButton>
-          <ToolbarButton id="color" title="Color">
+          <ToolbarButton index={2} id="color" title="Color">
             <svg
               width="20"
               height="20"
@@ -79,7 +151,7 @@ export function UIToolbar() {
               />
             </svg>
           </ToolbarButton>
-          <ToolbarButton id="text" title="Text">
+          <ToolbarButton index={3} id="text" title="Text">
             <svg
               width="20"
               height="20"
@@ -96,12 +168,12 @@ export function UIToolbar() {
               />
             </svg>
           </ToolbarButton>
-        </div>
+          {/* </div> */}
 
-        <div className="h-6 w-px rounded-full bg-white/20" />
+          {/* <div className="h-6 w-px rounded-full bg-black/20" /> */}
 
-        <div className="flex items-center">
-          <ToolbarButton id="share" title="Share">
+          {/* <div className="flex items-center"> */}
+          <ToolbarButton index={4} id="share" title="Share">
             <svg
               width="20"
               height="20"
@@ -118,7 +190,7 @@ export function UIToolbar() {
               />
             </svg>
           </ToolbarButton>
-          <ToolbarButton id="more" title="More">
+          <ToolbarButton index={5} id="more" title="More">
             <svg
               width="20"
               height="20"
@@ -135,8 +207,28 @@ export function UIToolbar() {
               />
             </svg>
           </ToolbarButton>
+          {/* </div> */}
         </div>
-      </div>
+
+        <svg className="hidden">
+          <defs>
+            <filter id="goo">
+              <feGaussianBlur
+                in="SourceGraphic"
+                stdDeviation="10"
+                result="blur"
+              />
+              <feColorMatrix
+                in="blur"
+                mode="matrix"
+                values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 16 -7"
+                result="goo"
+              />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+          </defs>
+        </svg>
+      </MotionConfig>
     </ToolbarContext.Provider>
   );
 }
