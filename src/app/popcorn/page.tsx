@@ -7,7 +7,7 @@ import imageMesh2 from "./mesh-2.png";
 import imageMesh3 from "./mesh-3.png";
 import imageRegionalBackground from "./mesh-3.png";
 import React from "react";
-import { MotionConfig } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import * as Tabs from "@radix-ui/react-tabs";
 
 function Toolbar() {
@@ -27,6 +27,7 @@ function Toolbar() {
 
 function InnerContent() {
   const [active, setActive] = React.useState("regional");
+  const [pressing, setPressing] = React.useState(false);
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[51px]">
@@ -38,112 +39,324 @@ function InnerContent() {
         <Tabs.Root value={active} onValueChange={setActive} className="px-5">
           <Tabs.List className="absolute left-1/2 -translate-x-1/2 items-center whitespace-nowrap rounded-full border-2 border-[#e2e2e2] bg-[#e2e0e1] p-px tracking-tight">
             <Tabs.Trigger value="local" asChild>
-              <button
+              <motion.button
                 aria-label="Local"
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setActive("local")}
+                onTapStart={() => {
+                  if (active !== "local") setPressing(true);
+                }}
+                onTapCancel={() => setPressing(false)}
+                onTap={() => {
+                  setPressing(false);
+                  setActive("local");
+                }}
+                whileTap={{ scale: 1.1 }}
                 className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
               >
                 Local
-              </button>
+              </motion.button>
             </Tabs.Trigger>
             <Tabs.Trigger value="regional" asChild>
-              <button
+              <motion.button
                 aria-label="Regional"
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setActive("regional")}
+                onTapStart={() => {
+                  if (active !== "regional") setPressing(true);
+                }}
+                onTapCancel={() => setPressing(false)}
+                onTap={() => {
+                  setPressing(false);
+                  setActive("regional");
+                }}
+                whileTap={{ scale: 1.1 }}
                 className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
               >
                 Regional
-              </button>
+              </motion.button>
             </Tabs.Trigger>
             <Tabs.Trigger value="global" asChild>
-              <button
+              <motion.button
                 aria-label="Global"
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setActive("global")}
+                onTapStart={() => {
+                  if (active !== "global") setPressing(true);
+                }}
+                onTapCancel={() => setPressing(false)}
+                onTap={() => {
+                  setPressing(false);
+                  setActive("global");
+                }}
+                whileTap={{ scale: 1.1 }}
                 className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
               >
                 Global
-              </button>
+              </motion.button>
             </Tabs.Trigger>
           </Tabs.List>
-          <Tabs.Content value="local" />
-          <Tabs.Content value="regional" className="pt-24">
-            <h1 className="flex flex-col gap-1 text-center font-serif text-4xl font-medium">
-              <span>Fixed price,</span>
-              <span>No hidden costs,</span>
-              <span>Global roaming,</span>
-              <span>Efficient support</span>
-            </h1>
+          <Tabs.Content value="local" className="pt-24">
+            <motion.div
+              initial={{ scale: 0.95, filter: "blur(4px)", opacity: 0.8 }}
+              animate={
+                pressing
+                  ? { scale: 0.95, filter: "blur(4px)", opacity: 0.8 }
+                  : { scale: 1, filter: "blur(0px)", opacity: 1 }
+              }
+              className="space-y-9"
+            >
+              <h1 className="flex flex-col gap-1 text-center font-serif text-4xl font-medium">
+                <span>Fixed price,</span>
+                <span>No hidden costs,</span>
+                <span>Global roaming,</span>
+                <span>Efficient support</span>
+              </h1>
 
-            <div className="h-9" />
-
-            <div className="w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)]">
-              <div className="flex items-center justify-between p-5">
-                <div>
-                  <p className="font-serif leading-5 tracking-tight">
-                    United States
-                  </p>
-                  <p className="text-[12px] tracking-tight text-[#9b9a96]">
-                    700 MB remaining
-                  </p>
+              <div className="w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)]">
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">
+                      N. Virginia
+                    </p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      324 MB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh1}
+                    alt="Mesh 1"
+                    className="size-10 rotate-180 rounded-full"
+                  />
                 </div>
-                <Image
-                  src={imageMesh1}
-                  alt="Mesh 1"
-                  className="size-10 rounded-full"
-                />
-              </div>
-              <div className="flex items-center justify-between p-5">
-                <div>
-                  <p className="font-serif leading-5 tracking-tight">Europe</p>
-                  <p className="text-[12px] tracking-tight text-[#9b9a96]">
-                    1.2GB remaining
-                  </p>
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">
+                      Oregon
+                    </p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      1.1 GB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh2}
+                    alt="Mesh 2"
+                    className="size-10 rotate-180 rounded-full"
+                  />
                 </div>
-                <Image
-                  src={imageMesh2}
-                  alt="Mesh 2"
-                  className="size-10 rotate-180 rounded-full"
-                />
-              </div>
-              <div className="flex items-center justify-between p-5">
-                <div>
-                  <p className="font-serif leading-5 tracking-tight">Japan</p>
-                  <p className="text-[12px] tracking-tight text-[#9b9a96]">
-                    1.45GB remaining
-                  </p>
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">Ohio</p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      78 MB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh3}
+                    alt="Mesh 3"
+                    className="size-10 rotate-90 rounded-full"
+                  />
                 </div>
-                <Image
-                  src={imageMesh3}
-                  alt="Mesh 3"
-                  className="size-10 rotate-90 rounded-full"
-                />
               </div>
-            </div>
 
-            <div className="h-9" />
-
-            <div className="flex w-full justify-center">
-              <button
-                aria-label="See More"
-                type="button"
-                className="rounded-full bg-white px-2.5 py-[5px] text-[13px] font-semibold text-[#3e3e3e] shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
-              >
-                See More
-              </button>
-            </div>
+              <div className="flex w-full justify-center">
+                <button
+                  aria-label="See More"
+                  type="button"
+                  className="rounded-full bg-white px-2.5 py-[5px] text-[13px] font-semibold text-[#3e3e3e] shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
+                >
+                  See More
+                </button>
+              </div>
+            </motion.div>
           </Tabs.Content>
-          <Tabs.Content value="global" />
+          <Tabs.Content value="regional" className="pt-24">
+            <motion.div
+              initial={{ scale: 0.95, filter: "blur(4px)", opacity: 0.8 }}
+              animate={
+                pressing
+                  ? { scale: 0.95, filter: "blur(4px)", opacity: 0.8 }
+                  : { scale: 1, filter: "blur(0px)", opacity: 1 }
+              }
+              className="space-y-9"
+            >
+              <h1 className="flex flex-col gap-1 text-center font-serif text-4xl font-medium">
+                <span>Fixed price,</span>
+                <span>No hidden costs,</span>
+                <span>Global roaming,</span>
+                <span>Efficient support</span>
+              </h1>
+
+              <div className="w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)]">
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">
+                      United States
+                    </p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      700 MB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh1}
+                    alt="Mesh 1"
+                    className="size-10 rounded-full"
+                  />
+                </div>
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">
+                      Germany
+                    </p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      1.2GB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh2}
+                    alt="Mesh 2"
+                    className="size-10 rotate-180 rounded-full"
+                  />
+                </div>
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">Japan</p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      1.45GB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh3}
+                    alt="Mesh 3"
+                    className="size-10 rotate-90 rounded-full"
+                  />
+                </div>
+              </div>
+
+              <div className="flex w-full justify-center">
+                <button
+                  aria-label="See More"
+                  type="button"
+                  className="rounded-full bg-white px-2.5 py-[5px] text-[13px] font-semibold text-[#3e3e3e] shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
+                >
+                  See More
+                </button>
+              </div>
+            </motion.div>
+          </Tabs.Content>
+          <Tabs.Content value="global" className="pt-24">
+            <motion.div
+              initial={{ scale: 0.95, filter: "blur(4px)", opacity: 0.8 }}
+              animate={
+                pressing
+                  ? { scale: 0.95, filter: "blur(4px)", opacity: 0.8 }
+                  : { scale: 1, filter: "blur(0px)", opacity: 1 }
+              }
+              className="space-y-9"
+            >
+              <h1 className="flex flex-col gap-1 text-center font-serif text-4xl font-medium">
+                <span>Fixed price,</span>
+                <span>No hidden costs,</span>
+                <span>Global roaming,</span>
+                <span>Efficient support</span>
+              </h1>
+
+              <div className="w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)]">
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">
+                      North America
+                    </p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      7.43 GB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh1}
+                    alt="Mesh 1"
+                    className="size-10 rounded-full"
+                  />
+                </div>
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">
+                      Europe
+                    </p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      6 GB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh2}
+                    alt="Mesh 2"
+                    className="size-10 rotate-180 rounded-full"
+                  />
+                </div>
+                <div className="flex items-center justify-between p-5">
+                  <div>
+                    <p className="font-serif leading-5 tracking-tight">Asia</p>
+                    <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                      10.24 GB remaining
+                    </p>
+                  </div>
+                  <Image
+                    src={imageMesh3}
+                    alt="Mesh 3"
+                    className="size-10 rotate-90 rounded-full"
+                  />
+                </div>
+              </div>
+
+              <div className="flex w-full justify-center">
+                <button
+                  aria-label="See More"
+                  type="button"
+                  className="rounded-full bg-white px-2.5 py-[5px] text-[13px] font-semibold text-[#3e3e3e] shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
+                >
+                  See More
+                </button>
+              </div>
+            </motion.div>
+          </Tabs.Content>
         </Tabs.Root>
       </div>
 
-      <Image
-        src={imageRegionalBackground}
-        alt="Regional background"
-        className="absolute bottom-0 z-20 h-[57vh] w-auto"
-      />
+      {active === "local" && (
+        <motion.div
+          initial={{ height: "50vh" }}
+          animate={pressing ? { height: "50vh" } : { height: "57vh" }}
+          className="absolute bottom-0 z-20 h-[57vh] w-auto"
+        >
+          <Image
+            src={imageMesh1}
+            alt="Local background"
+            className="size-full"
+          />
+        </motion.div>
+      )}
+      {active === "regional" && (
+        <motion.div
+          initial={{ height: "50vh" }}
+          animate={pressing ? { height: "50vh" } : { height: "57vh" }}
+          className="absolute bottom-0 z-20 h-[57vh] w-auto"
+        >
+          <Image
+            src={imageRegionalBackground}
+            alt="Regional background"
+            className="size-full"
+          />
+        </motion.div>
+      )}
+      {active === "global" && (
+        <motion.div
+          initial={{ height: "50vh" }}
+          animate={pressing ? { height: "50vh" } : { height: "57vh" }}
+          className="absolute bottom-0 z-20 h-[57vh] w-auto"
+        >
+          <Image
+            src={imageMesh2}
+            alt="Regional background"
+            className="size-full"
+          />
+        </motion.div>
+      )}
     </div>
   );
 }
