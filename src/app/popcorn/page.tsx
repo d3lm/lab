@@ -26,6 +26,8 @@ function Toolbar() {
 }
 
 function InnerContent() {
+  const [active, setActive] = React.useState("regional");
+
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[51px]">
       <div className="size-full absolute top-0 z-30 bg-gradient-to-b from-[#efefef] from-45% to-transparent to-60%" />
@@ -33,25 +35,37 @@ function InnerContent() {
       <div className="z-40 w-full space-y-16">
         <Toolbar />
 
-        <Tabs.Root defaultValue="regional" className="px-5">
+        <Tabs.Root value={active} onValueChange={setActive} className="px-5">
           <Tabs.List className="absolute left-1/2 -translate-x-1/2 items-center whitespace-nowrap rounded-full border-2 border-[#e2e2e2] bg-[#e2e0e1] p-px tracking-tight">
-            <Tabs.Trigger
-              value="local"
-              className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
-            >
-              Local
+            <Tabs.Trigger value="local" asChild>
+              <button
+                aria-label="Local"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => setActive("local")}
+                className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
+              >
+                Local
+              </button>
             </Tabs.Trigger>
-            <Tabs.Trigger
-              value="regional"
-              className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
-            >
-              Regional
+            <Tabs.Trigger value="regional" asChild>
+              <button
+                aria-label="Regional"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => setActive("regional")}
+                className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
+              >
+                Regional
+              </button>
             </Tabs.Trigger>
-            <Tabs.Trigger
-              value="global"
-              className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
-            >
-              Global
+            <Tabs.Trigger value="global" asChild>
+              <button
+                aria-label="Global"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => setActive("global")}
+                className="rounded-full px-2.5 py-[5px] text-[13px] font-semibold text-[#929091] data-[state=active]:bg-white data-[state=active]:text-[#3e3e3e] data-[state=active]:shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.16)]"
+              >
+                Global
+              </button>
             </Tabs.Trigger>
           </Tabs.List>
           <Tabs.Content value="local" />
