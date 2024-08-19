@@ -106,12 +106,12 @@ function InnerContent() {
               <h1 className="flex flex-col gap-1 text-center font-serif text-4xl font-medium">
                 <span>Fixed price,</span>
                 <span>No hidden costs,</span>
-                <span>Global roaming,</span>
+                <span>Local roaming,</span>
                 <span>Efficient support</span>
               </h1>
 
               <div className="w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)]">
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">
                       N. Virginia
@@ -120,13 +120,16 @@ function InnerContent() {
                       324 MB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh1}
-                    alt="Mesh 1"
-                    className="size-10 rotate-180 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh1}
+                      alt="Mesh 1"
+                      className="size-full absolute rotate-90 rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">
                       Oregon
@@ -135,24 +138,31 @@ function InnerContent() {
                       1.1 GB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh2}
-                    alt="Mesh 2"
-                    className="size-10 rotate-180 rounded-full"
-                  />
+
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh3}
+                      alt="Mesh 3"
+                      className="size-full absolute rotate-180 rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">Ohio</p>
                     <p className="text-[12px] tracking-tight text-[#9b9a96]">
                       78 MB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh3}
-                    alt="Mesh 3"
-                    className="size-10 rotate-90 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh2}
+                      alt="Mesh 2"
+                      className="size-full absolute rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
               </div>
 
@@ -180,12 +190,12 @@ function InnerContent() {
               <h1 className="flex flex-col gap-1 text-center font-serif text-4xl font-medium">
                 <span>Fixed price,</span>
                 <span>No hidden costs,</span>
-                <span>Global roaming,</span>
+                <span>Regional roaming,</span>
                 <span>Efficient support</span>
               </h1>
 
               <div className="w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)]">
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">
                       United States
@@ -194,13 +204,16 @@ function InnerContent() {
                       700 MB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh1}
-                    alt="Mesh 1"
-                    className="size-10 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh1}
+                      alt="Mesh 1"
+                      className="size-full absolute rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">
                       Germany
@@ -209,24 +222,30 @@ function InnerContent() {
                       1.2GB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh2}
-                    alt="Mesh 2"
-                    className="size-10 rotate-180 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh2}
+                      alt="Mesh 2"
+                      className="size-full absolute rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">Japan</p>
                     <p className="text-[12px] tracking-tight text-[#9b9a96]">
                       1.45GB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh3}
-                    alt="Mesh 3"
-                    className="size-10 rotate-90 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh3}
+                      alt="Mesh 3"
+                      className="size-full absolute rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
               </div>
 
@@ -259,7 +278,7 @@ function InnerContent() {
               </h1>
 
               <div className="w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)]">
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">
                       North America
@@ -268,13 +287,16 @@ function InnerContent() {
                       7.43 GB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh1}
-                    alt="Mesh 1"
-                    className="size-10 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh3}
+                      alt="Mesh 3"
+                      className="size-full absolute rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">
                       Europe
@@ -283,24 +305,30 @@ function InnerContent() {
                       6 GB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh2}
-                    alt="Mesh 2"
-                    className="size-10 rotate-180 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh2}
+                      alt="Mesh 2"
+                      className="size-full absolute rotate-90 rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between p-5">
+                <div className="flex items-center justify-between px-5 py-4">
                   <div>
                     <p className="font-serif leading-5 tracking-tight">Asia</p>
                     <p className="text-[12px] tracking-tight text-[#9b9a96]">
                       10.24 GB remaining
                     </p>
                   </div>
-                  <Image
-                    src={imageMesh3}
-                    alt="Mesh 3"
-                    className="size-10 rotate-90 rounded-full"
-                  />
+                  <div className="size-12 relative rounded-full">
+                    <Image
+                      src={imageMesh1}
+                      alt="Mesh 1"
+                      className="size-full absolute rotate-180 rounded-full p-px"
+                    />
+                    <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                  </div>
                 </div>
               </div>
 
