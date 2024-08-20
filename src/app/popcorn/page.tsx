@@ -672,7 +672,7 @@ export default function StagingPage() {
   return (
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.5 }}>
       <main className="flex h-screen select-none items-center justify-center overflow-hidden">
-        <div className="relative flex aspect-square h-screen items-center justify-center bg-gradient-to-br from-[#FAFAFA]/70 to-[#FFFFFF]">
+        <div className="relative flex aspect-square h-screen items-center justify-center bg-gradient-to-br from-[#eae8eb]/70 to-[#dde1eb]">
           <div className="absolute left-1/2 top-1/2 z-20 h-[813px] w-[376px] -translate-x-1/2 -translate-y-1/2">
             <InnerContent />
           </div>
