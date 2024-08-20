@@ -7,7 +7,7 @@ import imageMesh2 from "./mesh-2.png";
 import imageMesh3 from "./mesh-3.png";
 import imageRegionalBackground from "./mesh-3.png";
 import React from "react";
-import { motion, MotionConfig } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import * as Tabs from "@radix-ui/react-tabs";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
@@ -55,7 +55,7 @@ function TabsList() {
             ? { scale: 0.9, filter: "blur(4px)", opacity: 0.8 }
             : { scale: 1, filter: "blur(0px)", opacity: 1 }
         }
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.2 }}
         className="flex w-full justify-center"
       >
         <div className="w-fit items-center whitespace-nowrap rounded-full border-2 border-[#e2e2e2] bg-[#e2e0e1] p-px tracking-tight">
@@ -159,7 +159,7 @@ function RegionalTabContent() {
               ? { scale: 0.9, filter: "blur(4px)", opacity: 0.8 }
               : { scale: 1, filter: "blur(0px)", opacity: 1 }
           }
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }}
           className="flex flex-col gap-1 text-center font-serif text-4xl font-medium"
         >
           <span>Fixed price,</span>
@@ -171,74 +171,230 @@ function RegionalTabContent() {
         <div className="absolute bottom-0 w-full space-y-9">
           <div
             className={cn(
-              "w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)] transition-shadow duration-300",
+              "w-full divide-y divide-[#e7e7e7] rounded-[25px] border border-[#e7e7e7] bg-[#f7f7f7] shadow-[0_6px_6px_-3px_rgba(0,0,0,0.0.16)] transition-shadow duration-200",
               { "shadow-[0_6px_36px_-12px_rgba(0,0,0,0.0.6)]": ctx.location },
             )}
           >
             <motion.div
               onClick={() => ctx.setLocation("united-states")}
-              animate={ctx.location === "united-states" ? { height: 200 } : {}}
-              transition={{ duration: 0.3 }}
-              className="flex cursor-pointer items-center justify-between px-5 py-4"
+              animate={
+                ctx.location === "united-states"
+                  ? { height: 200, borderTopRightRadius: 25 }
+                  : { height: 81 }
+              }
+              transition={{ duration: 0.2 }}
+              className="relative flex cursor-pointer items-center justify-between overflow-hidden px-5 py-4"
             >
-              <div>
-                <p className="font-serif leading-5 tracking-tight">
-                  United States
-                </p>
-                <p className="text-[12px] tracking-tight text-[#9b9a96]">
-                  700 MB remaining
-                </p>
-              </div>
-              <div className="size-12 relative rounded-full">
-                <Image
-                  src={imageMesh1}
-                  alt="Mesh 1"
-                  className="size-full absolute rounded-full p-px"
-                />
-                <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
-              </div>
+              <AnimatePresence>
+                {ctx.location === "united-states" ? (
+                  <>
+                    <motion.div
+                      layoutId="united-states-title"
+                      className="absolute left-5 top-5 z-50"
+                    >
+                      <p className="font-serif leading-5 tracking-tight">
+                        United States
+                      </p>
+                      <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                        700 MB remaining
+                      </p>
+                    </motion.div>
+                    <motion.div
+                      layoutId="united-states-gradient"
+                      className="size-[350px] absolute -bottom-[130px] -right-[70px] rounded-full"
+                    >
+                      <Image
+                        src={imageMesh1}
+                        alt="Mesh 1"
+                        className="size-full absolute rounded-full p-px"
+                      />
+                      <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_60%)]" />
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                      transition={{ delay: 0.1 }}
+                      className="absolute bottom-5 left-5 z-50 text-foreground/70"
+                    >
+                      <p>3 GB Bandwidth</p>
+                      <p>23 Locations</p>
+                      <p>0 Downtime</p>
+                    </motion.div>
+                  </>
+                ) : (
+                  <>
+                    <motion.div
+                      layoutId="united-states-title"
+                      className="absolute left-5 top-5 z-50"
+                    >
+                      <p className="font-serif leading-5 tracking-tight">
+                        United States
+                      </p>
+                      <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                        700 MB remaining
+                      </p>
+                    </motion.div>
+                    <motion.div
+                      layoutId="united-states-gradient"
+                      className="size-12 absolute right-5 top-4 rounded-full"
+                    >
+                      <Image
+                        src={imageMesh1}
+                        alt="Mesh 1"
+                        className="size-full absolute rounded-full p-px"
+                      />
+                      <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </motion.div>
             <motion.div
               onClick={() => ctx.setLocation("germany")}
-              animate={ctx.location === "germany" ? { height: 200 } : {}}
-              transition={{ duration: 0.3 }}
-              className="flex cursor-pointer items-center justify-between px-5 py-4"
+              animate={
+                ctx.location === "germany" ? { height: 200 } : { height: 81 }
+              }
+              transition={{ duration: 0.2 }}
+              className="relative flex cursor-pointer items-center justify-between overflow-hidden px-5 py-4"
             >
-              <div>
-                <p className="font-serif leading-5 tracking-tight">Germany</p>
-                <p className="text-[12px] tracking-tight text-[#9b9a96]">
-                  1.2GB remaining
-                </p>
-              </div>
-              <div className="size-12 relative rounded-full">
-                <Image
-                  src={imageMesh2}
-                  alt="Mesh 2"
-                  className="size-full absolute rounded-full p-px"
-                />
-                <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
-              </div>
+              <AnimatePresence>
+                {ctx.location === "germany" ? (
+                  <>
+                    <motion.div
+                      layoutId="germany-title"
+                      className="absolute left-5 top-5 z-50"
+                    >
+                      <p className="font-serif leading-5 tracking-tight">
+                        Germany
+                      </p>
+                      <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                        1.2GB remaining
+                      </p>
+                    </motion.div>
+                    <motion.div
+                      layoutId="germany-gradient"
+                      className="size-[400px] absolute -bottom-[170px] -right-[130px] rounded-full"
+                    >
+                      <Image
+                        src={imageMesh2}
+                        alt="Mesh 2"
+                        className="size-full absolute rotate-90 rounded-full p-px"
+                      />
+                      <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                      transition={{ delay: 0.1 }}
+                      className="absolute bottom-5 left-5 z-50 text-foreground/70"
+                    >
+                      <p>2.8 GB Bandwidth</p>
+                      <p>15 Locations</p>
+                      <p>0 Downtime</p>
+                    </motion.div>
+                  </>
+                ) : (
+                  <>
+                    <motion.div
+                      layoutId="germany-title"
+                      className="absolute left-5 top-5 z-50"
+                    >
+                      <p className="font-serif leading-5 tracking-tight">
+                        Germany
+                      </p>
+                      <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                        1.2GB remaining
+                      </p>
+                    </motion.div>
+                    <motion.div
+                      layoutId="germany-gradient"
+                      className="size-12 absolute right-5 top-4 rounded-full"
+                    >
+                      <Image
+                        src={imageMesh2}
+                        alt="Mesh 2"
+                        className="size-full absolute rounded-full p-px"
+                      />
+                      <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </motion.div>
             <motion.div
               onClick={() => ctx.setLocation("japan")}
-              animate={ctx.location === "japan" ? { height: 200 } : {}}
-              transition={{ duration: 0.3 }}
-              className="flex cursor-pointer items-center justify-between px-5 py-4"
+              animate={
+                ctx.location === "japan" ? { height: 200 } : { height: 81 }
+              }
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="relative flex cursor-pointer items-center justify-between overflow-hidden rounded-br-[25px] px-5 py-4"
             >
-              <div>
-                <p className="font-serif leading-5 tracking-tight">Japan</p>
-                <p className="text-[12px] tracking-tight text-[#9b9a96]">
-                  1.45GB remaining
-                </p>
-              </div>
-              <div className="size-12 relative rounded-full">
-                <Image
-                  src={imageMesh3}
-                  alt="Mesh 3"
-                  className="size-full absolute rounded-full p-px"
-                />
-                <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
-              </div>
+              <AnimatePresence>
+                {ctx.location === "japan" ? (
+                  <>
+                    <motion.div
+                      layoutId="japan-title"
+                      className="absolute left-5 top-5 z-50"
+                    >
+                      <p className="font-serif leading-5 tracking-tight">
+                        Japan
+                      </p>
+                      <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                        1.45GB remaining
+                      </p>
+                    </motion.div>
+                    <motion.div
+                      layoutId="japan-gradient"
+                      className="size-[350px] absolute -bottom-[130px] -right-[70px] rounded-full"
+                    >
+                      <Image
+                        src={imageMesh3}
+                        alt="Mesh 3"
+                        className="size-full absolute rounded-full p-px"
+                      />
+                      <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                      transition={{ delay: 0.1 }}
+                      className="absolute bottom-5 left-5 z-50 text-foreground/70"
+                    >
+                      <p>1 GB Bandwidth</p>
+                      <p>8 Locations</p>
+                      <p>0 Downtime</p>
+                    </motion.div>
+                  </>
+                ) : (
+                  <>
+                    <motion.div
+                      layoutId="japan-title"
+                      className="absolute left-5 top-5 z-50"
+                    >
+                      <p className="font-serif leading-5 tracking-tight">
+                        Japan
+                      </p>
+                      <p className="text-[12px] tracking-tight text-[#9b9a96]">
+                        1.45GB remaining
+                      </p>
+                    </motion.div>
+                    <motion.div
+                      layoutId="japan-gradient"
+                      className="size-12 absolute right-5 top-4 rounded-full"
+                    >
+                      <Image
+                        src={imageMesh3}
+                        alt="Mesh 3"
+                        className="size-full absolute rounded-full p-px"
+                      />
+                      <div className="size-full absolute bg-[radial-gradient(circle,rgba(0,0,0,0)_0%,#f7f7f7_70%)] backdrop-blur-lg [mask:radial-gradient(circle,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_70%)]" />
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </motion.div>
           </div>
 
