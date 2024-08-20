@@ -182,7 +182,7 @@ function RegionalTabContent() {
                   ? { height: 200, borderTopRightRadius: 25 }
                   : { height: 81 }
               }
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
               className="relative flex cursor-pointer items-center justify-between overflow-hidden px-5 py-4"
             >
               <AnimatePresence>
@@ -255,7 +255,7 @@ function RegionalTabContent() {
               animate={
                 ctx.location === "germany" ? { height: 200 } : { height: 81 }
               }
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
               className="relative flex cursor-pointer items-center justify-between overflow-hidden px-5 py-4"
             >
               <AnimatePresence>
