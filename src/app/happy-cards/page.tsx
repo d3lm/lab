@@ -25,16 +25,16 @@ const cards = [
     color: "#fff",
   },
   {
-    id: "monkey",
-    image: imageMonkey,
-    title: `Wisdom Triumphs\nOver Trivialities`,
-    color: "#000",
-  },
-  {
     id: "fish",
     image: imageFish,
     title: `Tranquility Fills\nYour Heart`,
     color: "#666",
+  },
+  {
+    id: "monkey",
+    image: imageMonkey,
+    title: `Wisdom Triumphs\nOver Trivialities`,
+    color: "#000",
   },
 ];
 
