@@ -4,6 +4,7 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import imageBird from "@/assets/bird.jpg";
 import imageTiger from "@/assets/tiger.jpg";
 import imageFish from "@/assets/fish.jpg";
+import imageMonkey from "@/assets/monkey.jpg";
 import Image from "next/image";
 import React from "react";
 import { X } from "lucide-react";
@@ -15,21 +16,25 @@ const cards = [
     id: "bird",
     image: imageBird,
     title: `Freedom Has\nNo Bounds\nFor You`,
+    color: "#374a36",
   },
   {
     id: "tiger",
     image: imageTiger,
     title: `Fierce Beyond\nComprehension`,
+    color: "#fff",
   },
   {
     id: "monkey",
-    image: imageBird,
-    title: `Bold New Contemporary\nArt Showcase`,
+    image: imageMonkey,
+    title: `Wisdom Triumphs\nOver Trivialities`,
+    color: "#000",
   },
   {
     id: "fish",
     image: imageFish,
-    title: `Bold New Contemporary\nArt Showcase`,
+    title: `Tranquility Fills\nYour Heart`,
+    color: "#666",
   },
 ];
 
@@ -64,14 +69,6 @@ function AnimalCard(props: {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="absolute bottom-0 left-0 h-1/2 w-full rounded-b-[24px] bg-transparent backdrop-blur-md [mask:linear-gradient(0deg,rgba(0,0,0,1)_60%,rgba(0,0,0,0)_100%)]"
-        />
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          custom={{ open }}
-          className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-[#313f2d]"
         />
 
         <div className="absolute bottom-4 left-4 space-y-1.5">
@@ -156,6 +153,27 @@ function InnerContent() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
+                  className="absolute left-0 top-0 h-1/5 w-full rounded-t-[24px] bg-transparent backdrop-blur-md [mask:linear-gradient(180deg,rgba(0,0,0,1)_30%,rgba(0,0,0,0)_100%)]"
+                />
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute left-0 top-0 h-full w-1/5 rounded-l-[24px] bg-transparent backdrop-blur-md [mask:linear-gradient(90deg,rgba(0,0,0,1)_30%,rgba(0,0,0,0)_100%)]"
+                />
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute right-0 top-0 h-full w-1/5 rounded-l-[24px] bg-transparent backdrop-blur-md [mask:linear-gradient(270deg,rgba(0,0,0,1)_30%,rgba(0,0,0,0)_100%)]"
+                />
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   className="absolute bottom-0 left-0 h-1/2 w-full rounded-b-[24px] bg-transparent backdrop-blur-md [mask:linear-gradient(0deg,rgba(0,0,0,1)_60%,rgba(0,0,0,0)_100%)]"
                 />
 
@@ -164,10 +182,18 @@ function InnerContent() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   custom={{ open }}
-                  className="absolute bottom-0 left-0 h-1/3 w-full bg-gradient-to-t from-[#313f2d]"
+                  className="absolute left-0 top-0 h-1/4 w-full bg-gradient-to-b from-black/90"
                 />
 
-                <div className="absolute bottom-24 left-6 space-y-6">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  custom={{ open }}
+                  className="absolute bottom-0 left-0 h-1/4 w-full bg-gradient-to-t from-black/90"
+                />
+
+                <div className="absolute bottom-24 left-6 space-y-3">
                   <motion.p
                     layoutId={`title-${active.id}`}
                     className="whitespace-pre-wrap text-2xl font-medium leading-tight text-white"
