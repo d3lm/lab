@@ -14,7 +14,7 @@ function InnerContent() {
   const isAffirmation = ctx.phase === "affirmation";
 
   return (
-    <MotionConfig transition={{ type: "spring", bounce: 0, duration: 3 }}>
+    <MotionConfig transition={{ type: "spring", bounce: 0, duration: 2.5 }}>
       <div className="relative flex h-full flex-col overflow-hidden rounded-[51px] bg-[#E1F6FD] px-10 pt-20 text-[#1D3E56]">
         <AnimatePresence initial={false}>
           {isIdle && (
