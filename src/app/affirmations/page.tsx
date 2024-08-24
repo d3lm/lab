@@ -4,7 +4,7 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import imageBackgroud from "@/assets/snow-board.jpg";
 import Image from "next/image";
 import React from "react";
-import svgPhone from "./iphone-gold.svg";
+import svgPhone from "@/assets/iphone-silver.svg";
 import { cn } from "@/lib/utils";
 
 function InnerContent() {
@@ -279,7 +279,7 @@ export default function HappyCardsPage() {
       <main className="flex h-screen select-none items-center justify-center overflow-hidden">
         <div
           className={cn(
-            "relative flex aspect-square h-screen items-center justify-center bg-[#F1FAFD] transition-colors duration-300",
+            "relative flex aspect-square h-screen items-center justify-center bg-gradient-to-br from-[#F1FAFD] from-20% to-[#E1F6FD] transition-colors duration-300",
           )}
         >
           <div className="absolute left-1/2 top-1/2 z-20 h-[814px] w-[376px] -translate-x-1/2 -translate-y-1/2">
