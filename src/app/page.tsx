@@ -1,72 +1,32 @@
 "use client";
 
-import {
-  useDragControls,
-  motion,
-  MotionConfig,
-  useMotionValue,
-} from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
+import { Check } from "lucide-react";
 import React from "react";
-import MotionNumber from "motion-number";
 
 export default function HomePage() {
-  const controls = useDragControls();
-  const [value, setValue] = React.useState(35);
-  const timerX = useMotionValue(0);
-
-  function startDrag(event: React.PointerEvent) {
-    controls.start(event);
-  }
-
-  const amountChange = useMotionValue(0);
-
-  timerX.on("change", (val) => {
-    amountChange.set(Math.floor(val / 20) * -1);
-  });
-
-  amountChange.on("change", (val) => {
-    setValue(val + 35);
-  });
-
   return (
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.4 }}>
-      <div className="flex h-screen items-center justify-center bg-[#ecebec]">
-        <div className="relative h-[465px] w-[865px] overflow-x-hidden rounded-[80px] border-2 border-[#deddde] bg-[#f5f4f6] shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.06)]">
-          <p className="absolute left-0 top-[100px] w-full text-center font-mono text-[80px] font-extralight tracking-tight text-[#131213]">
-            <span>0:</span>
-            <MotionNumber value={value} locales="en-US" />
-          </p>
-
-          <motion.div
-            dragConstraints={{
-              left: 0,
-              right: 0,
-            }}
-            dragElastic={{
-              left: 1,
-              right: 1,
-            }}
-            drag="x"
-            dragControls={controls}
-            onPointerDown={startDrag}
-            style={{ touchAction: "none", x: timerX }}
-            className="absolute -left-[1928px] bottom-[100px] h-20 w-fit space-x-[15px] whitespace-nowrap bg-transparent"
-          >
-            {Array.from(Array(200).keys()).map((item) => (
-              <div
-                key={item}
-                className="inline-block h-full w-1 rounded-full bg-[#d5d4d5] [&:nth-child(10n)]:bg-[#bab9ba]"
-              />
-            ))}
-          </motion.div>
-
-          <div className="pointer-events-none absolute bottom-[100px] left-1/2 flex -translate-x-1/2 flex-col items-center">
-            <div className="size-4 rounded-full bg-[#fe0008] " />
-            <div className="h-[90px] w-1 rounded-b-full bg-[#fe0008]" />
+      <div className="flex h-screen items-center justify-center">
+        <div className="relative flex w-[800px] gap-4 rounded-[26px] bg-[#151517] bg-[linear-gradient(45deg,#161618_41.67%,#212123_41.67%,#212123_50%,#161618_50%,#161618_91.67%,#212123_91.67%,#212123_100%)] bg-[size:16.97px_16.97px] p-10 shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1),0_0_0px_2.5px_#161618,0_0_0px_2.5px_rgba(255,255,255,0.15)_inset]">
+          <div className="size-9 z-10 flex items-center justify-center rounded-full bg-[#38d199]/20 p-1.5 pt-2">
+            <Check className="text-[#38d199]" strokeWidth={2.5} />
           </div>
-
-          <div className="pointer-events-none absolute bottom-[100px] left-0 h-20 w-[40%] bg-gradient-to-r from-[#f5f4f6] from-10%" />
-          <div className="pointer-events-none absolute bottom-[100px] right-0 h-20 w-[40%] bg-gradient-to-l from-[#f5f4f6] from-10%" />
+          <div className="z-10 space-y-5">
+            <p className="text-[33px] font-medium leading-none tracking-tight text-[#38d199]">
+              Upload Successful
+            </p>
+            <div className="flex items-center gap-1 font-light">
+              <div className="w-fit rounded-[10px] bg-white/10 px-3 py-1">
+                <p className="text-3xl text-white">Invoice.pdf</p>
+              </div>
+              <p className="text-3xl text-white/70">
+                was uploaded and is ready to use.
+              </p>
+            </div>
+          </div>
+          <div className="absolute left-[2.5px] top-[2.5px] h-[calc(100%-5px)] w-full rounded-[24px] bg-gradient-to-r from-[#151517] from-30%" />
+          <div className="absolute left-0 top-0 h-full w-full rounded-[26px] bg-[radial-gradient(at_left_top,rgba(47,162,120,0.35),rgba(0,0,0,0)_90%)]" />
         </div>
       </div>
     </MotionConfig>

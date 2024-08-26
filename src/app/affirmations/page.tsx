@@ -122,7 +122,7 @@ function InnerContent() {
                         transition: { duration: 0.6 },
                       }}
                     >
-                      egardless of how previous the
+                      egardless of how the previous
                     </motion.p>
                     <motion.p
                       initial={{ opacity: 0, y: 12 }}
@@ -172,7 +172,7 @@ function InnerContent() {
                   }}
                   exit={{ opacity: 0, y: -20, transition: { duration: 0.6 } }}
                 >
-                  tunities to be better than past <em>you.</em>
+                  tunities to be better than before.
                 </motion.p>
               </motion.div>
 
