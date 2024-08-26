@@ -10,14 +10,14 @@ export default function AddToCartPage() {
   return (
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.2 }}>
       <div className="flex h-screen items-center justify-center bg-[#fafafa] text-[#1f1f1f]">
-        <div className="relative">
+        <div className="relative space-y-2">
           <motion.div
             initial={{ height: 0 }}
             animate={hovered ? { height: 56 } : {}}
             className="absolute bottom-10 left-0 z-0 flex w-full justify-center overflow-hidden rounded-t-[12px] bg-gradient-to-t from-[#1f1f1f] from-20% to-[#1f1f1f]/10 font-medium text-white/90"
           >
-            <div className="size-full absolute bottom-0 left-0 bg-white/30 backdrop-blur-xl [mask:linear-gradient(180deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]" />
-            <span className="font z-10 pt-2.5">3 Items in cart</span>
+            <div className="size-full absolute bottom-0 left-0 bg-white/30 backdrop-blur-sm [mask:linear-gradient(180deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]" />
+            <span className="font z-10 pt-3">3 Items in cart</span>
           </motion.div>
           <button
             onMouseOver={() => setHovered(true)}
