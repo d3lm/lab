@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${GeistSans.variable} ${EBGaramond.variable} font-sans antialiased`}
+        className={`${ChivoMono.variable} ${GeistSans.variable} ${EBGaramond.variable} font-sans antialiased`}
       >
         {children}
       </body>

@@ -7,22 +7,21 @@ import {
   useMotionValue,
 } from "framer-motion";
 import React from "react";
+import MotionNumber from "motion-number";
 
 export default function HomePage() {
   const controls = useDragControls();
   const [value, setValue] = React.useState(35);
+  const timerX = useMotionValue(0);
 
   function startDrag(event: React.PointerEvent) {
     controls.start(event);
   }
 
-  const dragStart = useMotionValue(0);
-  const dragAmount = useMotionValue(0);
   const amountChange = useMotionValue(0);
 
-  dragAmount.on("change", (val) => {
-    const difference = val - dragStart.get();
-    amountChange.set(Math.floor(difference / 20) * -1);
+  timerX.on("change", (val) => {
+    amountChange.set(Math.floor(val / 20) * -1);
   });
 
   amountChange.on("change", (val) => {
@@ -34,12 +33,11 @@ export default function HomePage() {
       <div className="flex h-screen items-center justify-center bg-[#ecebec]">
         <div className="relative h-[465px] w-[865px] overflow-x-hidden rounded-[80px] border-2 border-[#deddde] bg-[#f5f4f6] shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.06)]">
           <p className="absolute left-0 top-[100px] w-full text-center font-mono text-[80px] font-extralight tracking-tight text-[#131213]">
-            01 : {value}
+            <span>0:</span>
+            <MotionNumber value={value} locales="en-US" />
           </p>
 
           <motion.div
-            onDragStart={(_, info) => dragStart.set(info.point.x)}
-            onDrag={(_, info) => dragAmount.set(info.point.x)}
             dragConstraints={{
               left: 0,
               right: 0,
@@ -51,7 +49,7 @@ export default function HomePage() {
             drag="x"
             dragControls={controls}
             onPointerDown={startDrag}
-            style={{ touchAction: "none" }}
+            style={{ touchAction: "none", x: timerX }}
             className="absolute -left-[1928px] bottom-[100px] h-20 w-fit space-x-[15px] whitespace-nowrap bg-transparent"
           >
             {Array.from(Array(200).keys()).map((item) => (
