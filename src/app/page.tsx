@@ -13,10 +13,10 @@ export default function HomePage() {
       <div className="relative flex h-screen items-center justify-center">
         <div className="absolute bottom-32">
           <motion.div
-            initial={{ top: "-58px", scale: 0.84 }}
-            animate={hovered ? { top: "-398px", scale: 1 } : {}}
+            initial={{ top: "-58px", scale: 0.84, opacity: 0.9 }}
+            animate={hovered ? { top: "-398px", scale: 1, opacity: 1 } : {}}
             className={cn(
-              "absolute flex w-[800px] scale-[0.84] gap-4 rounded-[26px] bg-[#151517] bg-[size:16.97px_16.97px] p-10 opacity-90 shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1),0_0_0px_2.5px_#161618,0_0_0px_2.5px_rgba(255,255,255,0.15)_inset] transition-[background-image] duration-300",
+              "absolute flex w-[800px] scale-[0.84] gap-4 rounded-[26px] bg-[#151517] bg-[size:16.97px_16.97px] p-10 shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1),0_0_0px_2.5px_#161618,0_0_0px_2.5px_rgba(255,255,255,0.15)_inset] transition-[background-image] duration-300",
               {
                 "bg-[linear-gradient(45deg,#161618_41.67%,#212123_41.67%,#212123_50%,#161618_50%,#161618_91.67%,#212123_91.67%,#212123_100%)]":
                   hovered,
@@ -60,10 +60,10 @@ export default function HomePage() {
           </motion.div>
 
           <motion.div
-            initial={{ top: "-30px", scale: 0.92 }}
-            animate={hovered ? { top: "-199px", scale: 1 } : {}}
+            initial={{ top: "-30px", scale: 0.92, opacity: 0.9 }}
+            animate={hovered ? { top: "-199px", scale: 1, opacity: 1 } : {}}
             className={cn(
-              "absolute flex w-[800px] gap-4 rounded-[26px] bg-[#151517] bg-[size:16.97px_16.97px] p-10 opacity-90 shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1),0_0_0px_2.5px_#161618,0_0_0px_2.5px_rgba(255,255,255,0.15)_inset] transition-[background-image] duration-300",
+              "absolute flex w-[800px] gap-4 rounded-[26px] bg-[#151517] bg-[size:16.97px_16.97px] p-10 shadow-[0_6px_6px_-3px_rgba(0,0,0,0.1),0_0_0px_2.5px_#161618,0_0_0px_2.5px_rgba(255,255,255,0.15)_inset] transition-[background-image] duration-300",
               {
                 "bg-[linear-gradient(45deg,#161618_41.67%,#212123_41.67%,#212123_50%,#161618_50%,#161618_91.67%,#212123_91.67%,#212123_100%)]":
                   hovered,
