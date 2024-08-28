@@ -1,6 +1,8 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { Sparkle } from "lucide-react";
 import React from "react";
 
 export default function HomePage() {
@@ -19,21 +21,76 @@ export default function HomePage() {
         <button
           type="button"
           aria-label="Generate"
-          onClick={() => setLoading((prev) => !prev)}
-          className="flex h-10 w-[140px] items-center justify-center rounded-full bg-gradient-to-b from-[#8D22E1] to-[#F043FF] text-white shadow-[0_-4px_6px_2px_#8D22E1_inset,0_0_0_2px_#AF3DFF_inset,0_5px_11px_0_rgba(114,22,123,0.5)]"
+          disabled={loading}
+          onClick={() => setLoading(true)}
+          className={cn(
+            "flex h-10 w-[145px] items-center justify-center rounded-full bg-gradient-to-b from-[#8D22E1] to-[#F043FF] text-white shadow-[0_-4px_6px_2px_#8D22E1_inset,0_0_0_2px_#AF3DFF_inset,0_5px_11px_0_rgba(114,22,123,0.5)] transition-[box-shadow,opacity,transform] duration-200 active:scale-[0.98] active:shadow-[0_-4px_6px_2px_#8D22E1_inset,0_0_0_2px_#AF3DFF_inset,0_5px_11px_0_rgba(114,22,123,0.1)]",
+            { "opacity-70": loading },
+          )}
         >
           <motion.div
-            initial={{ width: 97 }}
-            animate={{ width: loading ? 110 : 97 }}
+            initial={{ width: 100 }}
+            animate={{ width: loading ? 113 : 100 }}
             className="flex items-center justify-between gap-1"
           >
-            <div className="size-6 shrink-0 bg-white" />
+            <div className="size-6 relative shrink-0">
+              <motion.div
+                initial={{ y: 0, scale: 1 }}
+                animate={loading ? { y: -2, scale: 1.1 } : { y: 0, scale: 1 }}
+                transition={{
+                  delay: 0.4,
+                  duration: 0.8,
+                  repeatType: "mirror",
+                  repeat: loading ? Infinity : 0,
+                }}
+              >
+                <Sparkle
+                  fill="currentColor"
+                  strokeWidth={1}
+                  className="size-2.5 absolute right-0"
+                />
+              </motion.div>
+              <motion.div
+                initial={{ y: 2.5 }}
+                animate={
+                  loading ? { y: -0.5, scale: 1.1 } : { y: 2.5, scale: 1 }
+                }
+                transition={{
+                  delay: 0,
+                  duration: 0.8,
+                  repeatType: "mirror",
+                  repeat: loading ? Infinity : 0,
+                }}
+              >
+                <Sparkle
+                  fill="currentColor"
+                  strokeWidth={1}
+                  className="size-4 absolute left-0"
+                />
+              </motion.div>
+              <motion.div
+                initial={{ y: 14 }}
+                animate={loading ? { y: 11, scale: 1.1 } : { y: 14, scale: 1 }}
+                transition={{
+                  delay: 0.2,
+                  duration: 0.8,
+                  repeatType: "mirror",
+                  repeat: loading ? Infinity : 0,
+                }}
+              >
+                <Sparkle
+                  fill="currentColor"
+                  strokeWidth={1}
+                  className="size-2 absolute right-1"
+                />
+              </motion.div>
+            </div>
             <AnimatePresence mode="popLayout">
               <motion.span
                 key={loading ? "generating" : "generate"}
-                initial={{ opacity: 0, y: -5, filter: "blur(4px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: 5, filter: "blur(4px)" }}
+                initial={{ opacity: 0, x: -5, filter: "blur(4px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -5, filter: "blur(4px)" }}
               >
                 {loading ? "Generating" : "Generate"}
               </motion.span>
