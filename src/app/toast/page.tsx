@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.4 }}>
       <div className="relative flex h-screen items-center justify-center">
-        <div className="absolute bottom-32">
+        <div className="absolute bottom-56">
           <motion.div
             initial={{ top: "-58px", scale: 0.84, opacity: 0.9 }}
             animate={hovered ? { top: "-398px", scale: 1, opacity: 1 } : {}}

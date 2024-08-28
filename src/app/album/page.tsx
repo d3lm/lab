@@ -1,13 +1,12 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import imageIphone from "./iphone.png";
 import imageCase from "./case.png";
 import imageSaltFlats from "./salt-flats.jpg";
 import imageMexico from "./mexico.jpg";
 import imageCouple from "./couple.jpg";
 import imageBeach from "./beach.jpg";
-import svgPhone from "./iphone-gold.svg";
+import svgPhone from "@/assets/iphone-gold.svg";
 import React from "react";
 import {
   AnimatePresence,
