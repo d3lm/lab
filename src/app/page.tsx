@@ -24,8 +24,8 @@ export default function HomePage() {
           disabled={loading}
           onClick={() => setLoading(true)}
           className={cn(
-            "flex h-10 w-[145px] items-center justify-center rounded-full bg-gradient-to-b from-[#8D22E1] to-[#F043FF] text-white shadow-[0_-4px_6px_2px_#8D22E1_inset,0_0_0_2px_#AF3DFF_inset,0_5px_11px_0_rgba(114,22,123,0.5)] transition-[box-shadow,opacity,transform] duration-200 active:scale-[0.98] active:shadow-[0_-4px_6px_2px_#8D22E1_inset,0_0_0_2px_#AF3DFF_inset,0_5px_11px_0_rgba(114,22,123,0.1)]",
-            { "opacity-70": loading },
+            "flex h-10 w-[145px] items-center justify-center rounded-full bg-gradient-to-b from-[#8D22E1] to-[#F043FF] text-white shadow-[0_-4px_6px_2px_#8D22E1_inset,0_0_0_2px_#AF3DFF_inset,0_5px_11px_0_rgba(114,22,123,0.5)] transition-[box-shadow,opacity,transform] duration-200 active:scale-[0.99] active:shadow-[0_-4px_6px_2px_#8D22E1_inset,0_0_0_2px_#AF3DFF_inset,0_5px_11px_0_rgba(114,22,123,0.2)]",
+            { "opacity-90": loading },
           )}
         >
           <motion.div
@@ -88,9 +88,9 @@ export default function HomePage() {
             <AnimatePresence mode="popLayout">
               <motion.span
                 key={loading ? "generating" : "generate"}
-                initial={{ opacity: 0, x: -5, filter: "blur(4px)" }}
-                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, x: -5, filter: "blur(4px)" }}
+                initial={{ opacity: 0, filter: "blur(4px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, filter: "blur(4px)" }}
               >
                 {loading ? "Generating" : "Generate"}
               </motion.span>
