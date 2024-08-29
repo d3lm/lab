@@ -5,7 +5,6 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import React from "react";
 import Image from "next/image";
 import svgPhone from "@/assets/iphone-black.svg";
-import imageForestSky from "@/assets/forest-sky.jpg";
 
 const Context = React.createContext<{
   status: string;
@@ -14,21 +13,10 @@ const Context = React.createContext<{
 
 function InnerContent() {
   const ctx = React.useContext(Context);
-  const isActive = ctx.status === "active";
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[51px] bg-[#FAFAFA] text-[#1F1F1F]">
-      <motion.div
-        initial={{ y: 100 }}
-        animate={isActive ? {} : {}}
-        className="size-full relative"
-      >
-        <Image
-          src={imageForestSky}
-          alt="Forest Sky"
-          className="size-full scale-[1.5]"
-        />
-      </motion.div>
+      <p>Start</p>
     </div>
   );
 }
