@@ -101,7 +101,7 @@ function InnerContent() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ ...transition, delay: 0.2, duration: 1.6 }}
-                    className="text-balance px-10 font-serif text-xl font-medium leading-relaxed"
+                    className="px-12 font-serif text-xl font-medium leading-relaxed"
                   >
                     The trees tower above, their branches weaving into a
                     suffocating canopy, blocking out the sunlight. Every step
@@ -116,7 +116,7 @@ function InnerContent() {
                   exit={{ opacity: 0, y: 10 }}
                   whileTap={{ scale: 0.95, transition: { duration: 0.15 } }}
                   transition={{ ...transition, duration: 1.6 }}
-                  className="z-10 rounded-full border border-white/30 bg-gradient-to-b from-white from-20% to-[#DDDDDD] px-4 py-1.5 shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.1)]"
+                  className="z-10 rounded-full border border-white/20 bg-gradient-to-b from-white/80 from-20% to-[#DDDDDD]/80 px-4 py-1.5 shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.1)]"
                 >
                   Start exploring
                 </motion.button>
@@ -182,7 +182,7 @@ export default function HomePage() {
             status === "active"
               ? {
                   backgroundImage:
-                    "linear-gradient(157.5deg, rgba(155, 186, 204, 0.8) 20%, rgba(213, 208, 199, 0), rgba(47, 58, 36, 0) 100%)",
+                    "linear-gradient(157.5deg, rgba(155, 186, 204, 0.7) 10%, rgba(213, 208, 199, 0), rgba(47, 58, 36, 0) 100%)",
                 }
               : {}
           }
