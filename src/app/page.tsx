@@ -17,11 +17,11 @@ const Context = React.createContext<{
   setStatus: React.Dispatch<React.SetStateAction<string>>;
 }>({ status: "", setStatus: () => null });
 
+const transition: Transition = { type: "spring", bounce: 0, duration: 3 };
+
 function InnerContent() {
   const ctx = React.useContext(Context);
   const isActive = ctx.status === "active";
-
-  const transition: Transition = { type: "spring", bounce: 0, duration: 3 };
 
   return (
     <MotionConfig transition={transition}>
@@ -33,10 +33,11 @@ function InnerContent() {
           {isActive && (
             <div className="size-full absolute left-0 top-0 z-10 flex flex-col items-center justify-center text-center text-white">
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
                 animate={{
                   opacity: 1,
                   y: 0,
+                  filter: "blur(0px)",
                   transition: { ...transition, delay: 1.6 },
                 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -45,10 +46,11 @@ function InnerContent() {
                 Break free.
               </motion.p>
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
                 animate={{
                   opacity: 1,
                   y: 0,
+                  filter: "blur(0px)",
                   transition: { ...transition, delay: 2.8 },
                 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -89,8 +91,8 @@ function InnerContent() {
                 <div className="space-y-10">
                   <motion.h1
                     initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
                     transition={{ ...transition, duration: 2 }}
                     className="font-display text-5xl font-bold tracking-tighter"
                   >
@@ -98,9 +100,9 @@ function InnerContent() {
                   </motion.h1>
                   <motion.p
                     initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ ...transition, delay: 0.2, duration: 1.6 }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -20, filter: "blur(4px)" }}
+                    transition={{ ...transition, delay: 0.1, duration: 1.6 }}
                     className="px-12 font-serif text-xl font-medium leading-relaxed"
                   >
                     The trees tower above, their branches weaving into a
@@ -144,14 +146,29 @@ function InnerContent() {
         <motion.div
           initial={{ opacity: 1 }}
           animate={isActive ? { opacity: 0 } : {}}
-          className="absolute left-0 top-0 h-2/3 w-full backdrop-blur-2xl [mask:linear-gradient(180deg,rgba(0,0,0,1)_80%,rgba(0,0,0,0)_100%)]"
+          className="absolute left-0 top-0 h-2/3 w-full backdrop-blur-lg [mask:linear-gradient(180deg,rgba(0,0,0,1)_80%,rgba(0,0,0,0)_100%)]"
         >
           <div className="size-full absolute left-0 top-0 opacity-30 [filter:url(#grain)] [mask:linear-gradient(180deg,rgba(0,0,0,1)_50%,rgba(0,0,0,0)_100%)]" />
         </motion.div>
 
-        <div className="absolute bottom-0 left-0 h-1/4 w-full bg-gradient-to-t from-black/70 backdrop-blur-2xl [mask:linear-gradient(0deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]">
+        <motion.div
+          initial={{
+            backgroundImage:
+              "linear-gradient(0deg, rgba(47, 58, 36, 0.7) 0%, rgba(47, 58, 36, 0) 100%)",
+          }}
+          animate={
+            isActive
+              ? {
+                  backgroundImage:
+                    "linear-gradient(0deg, rgba(255, 255, 255, 0.7) 0%, rgba(0, 0, 0, 0) 100%)",
+                  transition: { delay: 0.5, duration: 2.5 },
+                }
+              : {}
+          }
+          className="absolute bottom-0 left-0 h-1/4 w-full backdrop-blur-2xl [mask:linear-gradient(0deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]"
+        >
           <div className="size-full absolute left-0 top-0 opacity-30 [filter:url(#grain)] [mask:linear-gradient(0deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]" />
-        </div>
+        </motion.div>
       </div>
     </MotionConfig>
   );
@@ -186,7 +203,7 @@ export default function HomePage() {
                 }
               : {}
           }
-          transition={{ duration: 3 }}
+          transition={transition}
           className={cn(
             "relative flex aspect-square h-screen items-center justify-center transition-colors duration-300",
           )}
