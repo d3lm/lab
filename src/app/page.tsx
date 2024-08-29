@@ -176,13 +176,13 @@ export default function HomePage() {
         <motion.div
           initial={{
             backgroundImage:
-              "linear-gradient(180deg, rgba(155, 186, 204, 0.5) 0%, rgba(47, 58, 36, 0.5) 60%)",
+              "linear-gradient(180deg, rgba(155, 186, 204, 0.5) 20%, rgba(213, 208, 199, 0.5), rgba(47, 58, 36, 0.5) 70%)",
           }}
           animate={
             status === "active"
               ? {
                   backgroundImage:
-                    "linear-gradient(157.5deg, rgba(155, 186, 204, 0.8) 0%, rgba(47, 58, 36, 0) 100%)",
+                    "linear-gradient(157.5deg, rgba(155, 186, 204, 0.8) 20%, rgba(213, 208, 199, 0), rgba(47, 58, 36, 0) 100%)",
                 }
               : {}
           }
