@@ -23,6 +23,10 @@ const config = {
         sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
         serif: ["var(--font-eb-garamond)", ...defaultTheme.fontFamily.serif],
         mono: ["var(--font-chivo-mono)", ...defaultTheme.fontFamily.mono],
+        display: [
+          "var(--font-dancing-script)",
+          ...defaultTheme.fontFamily.sans,
+        ],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
