@@ -6,7 +6,7 @@ import imageThunderBg from "@/assets/thunder-bg.png";
 import imageAzura from "@/assets/azura.png";
 import Image from "next/image";
 
-// NOTE: TOOK 1 HOUR
+// NOTE: TOOK 90 MINS
 
 const transition: Transition = {
   type: "spring",

@@ -8,11 +8,9 @@ import imageJoe from "@/assets/joe-rogan.jpg";
 import imageMoral from "@/assets/moral.jpg";
 import Image from "next/image";
 
-const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
-
-//
 // NOTE: TOOK 2 HOURS
-//
+
+const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
 export default function HomePage() {
   const [status, setStatus] = React.useState("idle");
