@@ -79,7 +79,7 @@ export default function HomePage() {
                   <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.4, delay: 0.4 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
                     className="text-[10px] font-medium uppercase tracking-tight text-black/60"
                   >
                     Thunder
@@ -114,7 +114,7 @@ export default function HomePage() {
                   <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.4, delay: 0.4 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
                     className="text-[10px] font-medium uppercase tracking-tight text-black/60"
                   >
                     Competition
