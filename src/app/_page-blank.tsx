@@ -1,8 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { motion, MotionConfig, type Transition } from "framer-motion";
 import React from "react";
+
+const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
 export default function HomePage() {
   const [status, setStatus] = React.useState("idle");
@@ -18,7 +19,7 @@ export default function HomePage() {
   }, [setStatus]);
 
   return (
-    <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.4 }}>
+    <MotionConfig transition={transition}>
       <div className="relative flex h-screen items-center justify-center">
         <p>Start</p>
       </div>
