@@ -1,9 +1,12 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import React from "react";
+import imageHuberman from "@/assets/huberman.jpg";
+import imageJoe from "@/assets/joe-rogan.jpg";
+import imageMoral from "@/assets/moral.jpg";
+import Image from "next/image";
 
 export default function HomePage() {
   const [status, setStatus] = React.useState("idle");
@@ -28,8 +31,11 @@ export default function HomePage() {
 
           <div className="absolute bottom-[-200px] right-[66px] h-full w-[330px] rotate-[22deg] space-y-4 rounded-[40px] bg-gradient-to-t from-[#a69346] from-50% to-[#b54827] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]">
             <div className="flex justify-between text-lg font-medium tracking-tight text-[#eafafc]/50">
-              <p>12 Aug</p>
-              <p>Huberman Lab</p>
+              <p>28 Jul</p>
+              <div className="flex items-center gap-2">
+                <p>Moral Of The Story</p>
+                <Image src={imageMoral} alt="Moral" className="size-6 shadow" />
+              </div>
             </div>
             <h2 className="text-2xl font-medium tracking-tighter text-[#eafafc]">
               Perform with Dr. Andy Galpin: Nutritions to sup&hellip;
@@ -65,10 +71,17 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="absolute bottom-[-170px] right-[90px] h-full w-[330px] rotate-[8deg] space-y-4 rounded-[40px] bg-gradient-to-tl from-[#5c5c5c] from-10% to-[#1f1f1f] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]">
+          <div className="absolute bottom-[-170px] right-[92px] h-full w-[330px] rotate-[8deg] space-y-4 rounded-[40px] bg-gradient-to-tl from-[#5c5c5c] from-10% to-[#1f1f1f] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]">
             <div className="flex justify-between text-lg font-medium tracking-tight text-[#eafafc]/50">
-              <p>12 Aug</p>
-              <p>Huberman Lab</p>
+              <p>8 Aug</p>
+              <div className="flex items-center gap-2">
+                <p className="truncate">TJRE</p>
+                <Image
+                  src={imageJoe}
+                  alt="Joe Rogan"
+                  className="size-6 shadow"
+                />
+              </div>
             </div>
             <h2 className="text-2xl font-medium tracking-tighter text-[#eafafc]">
               Perform with Dr. Andy Galpin: Nutritions to sup&hellip;
@@ -107,7 +120,14 @@ export default function HomePage() {
           <div className="absolute bottom-[-140px] left-8 h-full w-[330px] rotate-[-4deg] space-y-4 rounded-[40px] bg-gradient-to-tl from-[#57b9e6] from-25% to-[#177cb0] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]">
             <div className="flex justify-between text-lg font-medium tracking-tight text-[#eafafc]/50">
               <p>12 Aug</p>
-              <p>Huberman Lab</p>
+              <div className="flex items-center gap-2">
+                <p>Huberman Lab</p>
+                <Image
+                  src={imageHuberman}
+                  alt="Huberman"
+                  className="size-6 shadow"
+                />
+              </div>
             </div>
             <h2 className="text-2xl font-medium tracking-tighter text-[#eafafc]">
               Perform with Dr. Andy Galpin: Nutritions to sup&hellip;
