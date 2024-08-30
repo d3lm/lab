@@ -7,7 +7,6 @@ import imageHuberman from "@/assets/huberman.jpg";
 import imageJoe from "@/assets/joe-rogan.jpg";
 import imageMoral from "@/assets/moral.jpg";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
@@ -31,7 +30,9 @@ export default function HomePage() {
       <div className="flex h-screen items-center justify-center bg-[#f2f2f2]">
         <div className="size-[500px] relative overflow-hidden rounded-[100px] border border-[#cacaca] bg-[#e3e3e3] font-medium tracking-tight shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.06)]">
           <motion.h1
-            animate={isPressing ? { scale: 0.9, filter: "blur(4px)" } : {}}
+            animate={
+              isPressing || isActive ? { scale: 0.9, filter: "blur(4px)" } : {}
+            }
             className="w-full pt-14 text-center text-4xl font-medium tracking-tighter text-[#9f9f9f]"
           >
             Podcast highlights
@@ -40,7 +41,9 @@ export default function HomePage() {
           <motion.div
             initial={{ rotate: 22 }}
             whileHover={{ rotate: 24, y: -20 }}
-            animate={isPressing ? { scale: 0.9, filter: "blur(4px)" } : {}}
+            animate={
+              isPressing || isActive ? { scale: 0.9, filter: "blur(4px)" } : {}
+            }
             className="absolute bottom-[-200px] right-[66px] h-full w-[330px] cursor-pointer space-y-4 rounded-[40px] bg-gradient-to-t from-[#a69346] from-50% to-[#b54827] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]"
           >
             <div className="flex justify-between text-lg font-medium tracking-tight text-[#eafafc]/50">
@@ -87,7 +90,9 @@ export default function HomePage() {
           <motion.div
             initial={{ rotate: 8 }}
             whileHover={{ rotate: 10, y: -20 }}
-            animate={isPressing ? { scale: 0.9, filter: "blur(4px)" } : {}}
+            animate={
+              isPressing || isActive ? { scale: 0.9, filter: "blur(4px)" } : {}
+            }
             className="absolute bottom-[-170px] right-[92px] h-full w-[330px] cursor-pointer space-y-4 rounded-[40px] bg-gradient-to-tl from-[#5c5c5c] from-10% to-[#1f1f1f] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]"
           >
             <div className="flex justify-between text-lg font-medium tracking-tight text-[#eafafc]/50">
@@ -156,7 +161,7 @@ export default function HomePage() {
                     }
                   : {}
             }
-            className="absolute bottom-[-140px] left-8 h-full w-[330px] cursor-pointer space-y-4 rounded-[40px] bg-gradient-to-tl from-[#57b9e6] from-25% to-[#177cb0] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]"
+            className="absolute bottom-[-140px] left-8 h-full w-[330px] cursor-pointer select-none space-y-4 rounded-[40px] bg-gradient-to-tl from-[#57b9e6] from-25% to-[#177cb0] px-8 py-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.8),0_0_0_4px_rgba(100,100,100,0.15)]"
           >
             <div className="flex justify-between gap-4 text-lg font-medium tracking-tight text-[#eafafc]/50">
               <p>12 Aug</p>
