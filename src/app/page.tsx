@@ -39,7 +39,8 @@ function CD() {
               transition: !isActive
                 ? {
                     ease: "linear",
-                    duration: 6,
+                    duration: 5,
+                    repeat: Infinity,
                   }
                 : {},
             }
