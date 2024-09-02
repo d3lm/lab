@@ -35,6 +35,7 @@ export default function HomePage() {
             <div className="absolute left-0 top-0 flex h-[310px] w-[130px] bg-gray-100">
               <div className="h-full w-[30%] bg-pink-100" />
               <div className="h-full w-[35%] bg-pink-200" />
+              <div className="h-full w-[35%] bg-pink-300" />
             </div>
           </div>
         </div>
