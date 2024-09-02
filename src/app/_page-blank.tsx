@@ -5,6 +5,11 @@ import React from "react";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
+const Context = React.createContext<{
+  status: string;
+  setStatus: React.Dispatch<React.SetStateAction<string>>;
+}>({ status: "", setStatus: () => null });
+
 export default function HomePage() {
   const [status, setStatus] = React.useState("idle");
 
@@ -19,10 +24,12 @@ export default function HomePage() {
   }, [setStatus]);
 
   return (
-    <MotionConfig transition={transition}>
-      <div className="relative flex h-screen items-center justify-center">
-        <p>Start</p>
-      </div>
-    </MotionConfig>
+    <Context.Provider value={{ status, setStatus }}>
+      <MotionConfig transition={transition}>
+        <div className="relative flex h-screen items-center justify-center">
+          <p>Start</p>
+        </div>
+      </MotionConfig>
+    </Context.Provider>
   );
 }

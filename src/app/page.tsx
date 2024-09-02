@@ -1,89 +1,17 @@
 "use client";
 
-import { motion, MotionConfig, Transition } from "framer-motion";
+import { motion, MotionConfig, type Transition } from "framer-motion";
 import React from "react";
-import imageIJustNeed from "@/assets/i-just-need-daniel.webp";
-import Image from "next/image";
-import MotionNumber from "motion-number";
 
-// NOTE: TOOK 2 HOURS
+const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
 const Context = React.createContext<{
   status: string;
   setStatus: React.Dispatch<React.SetStateAction<string>>;
 }>({ status: "", setStatus: () => null });
 
-const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
-
-function CD() {
-  const ctx = React.useContext(Context);
-  const isActive = ctx.status === "active";
-
-  return (
-    <motion.div
-      initial={{ rotate: 0, x: "-50%", y: -245, borderRadius: 250 }}
-      animate={
-        isActive
-          ? {
-              rotate: 0,
-              width: "100%",
-              height: "100%",
-              y: 0,
-              borderRadius: 0,
-              border: 0,
-              transition: { ...transition, duration: 1.2 },
-            }
-          : {
-              rotate: 360,
-              y: -245,
-              transition: !isActive
-                ? {
-                    ease: "linear",
-                    duration: 5,
-                    repeat: Infinity,
-                  }
-                : {},
-            }
-      }
-      transition={{ duration: 0.4 }}
-      whileHover={{
-        scale: 1.03,
-      }}
-      whileTap={{
-        scale: 1.06,
-      }}
-      onTapStart={() => {
-        ctx.setStatus("pressed");
-      }}
-      onTap={() => ctx.setStatus("active")}
-      onTapCancel={() => ctx.setStatus("idle")}
-      className="size-[500px] absolute left-1/2 z-10 flex  origin-center select-none items-center justify-center overflow-hidden border-2 border-[#a89f9f] bg-gray-400 shadow-[0_0_200px_-20px_rgba(0,0,0,0.6)]"
-    >
-      <Image
-        src={imageIJustNeed}
-        alt="I Just Need"
-        className="pointer-events-none select-none object-cover"
-      />
-      <motion.div
-        animate={isActive ? { opacity: 0 } : {}}
-        className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-      >
-        <div className="size-[150px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gray-500/20 backdrop-blur-sm" />
-        <div className="size-[143px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-[5px] border-dotted border-gray-200/10" />
-        <div className="size-[127px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-white bg-[#9799a5]" />
-        <div className="size-[85px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c9c2c7]" />
-        <div className="size-[70px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#c9c2c7]" />
-        <div className="size-[67px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#e3dee4]" />
-        <div className="size-[60px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#a6a4a5] bg-[#bebcba] shadow-[0_0_24px_-12px_rgba(0,0,0,0.25)_inset]" />
-      </motion.div>
-    </motion.div>
-  );
-}
-
 export default function HomePage() {
   const [status, setStatus] = React.useState("idle");
-  const [time, setTime] = React.useState(10);
-  const isNotIdle = status !== "idle";
 
   React.useEffect(() => {
     function handleEscape(e: KeyboardEvent) {
@@ -95,44 +23,17 @@ export default function HomePage() {
     return () => window.removeEventListener("keydown", handleEscape);
   }, [setStatus]);
 
-  React.useEffect(() => {
-    const interval = setInterval(() => setTime((prev) => prev + 1), 1000);
-    return () => clearInterval(interval);
-  }, [setTime]);
-
   return (
     <Context.Provider value={{ status, setStatus }}>
       <MotionConfig transition={transition}>
         <div className="flex h-screen items-center justify-center bg-[#f2f2f2]">
-          <div className="size-[500px] relative overflow-hidden rounded-[100px] border border-[#cacaca] bg-[#e3e3e3] font-medium tracking-tight shadow-[0_3px_3px_-1.5px_rgba(0,0,0,0.06)]">
-            <CD />
-            <motion.div
-              animate={isNotIdle ? { scale: 0.95, filter: "blur(4px)" } : {}}
-              className="absolute bottom-10 flex w-full flex-col items-center gap-5"
-            >
-              <div className="size-8 bg-gray-400"></div>
-
-              <div className="flex flex-col items-center gap-2 font-mono text-2xl">
-                <p className="text-[#a09c99]">Daniel Allan</p>
-                <p className="text-[#272622]">I Just Need (with Lyrah)</p>
-                <div className="relative h-[3px] w-9 bg-[#cbc7c6]">
-                  <motion.div
-                    initial={{ width: "45%" }}
-                    animate={{ width: "50%", transition: { duration: 12 } }}
-                    className="absolute left-0 top-0 h-full bg-[#7a787a]"
-                  />
-                </div>
-                <p className="text-[#272622]">
-                  <span className="text-[#272622]">
-                    1:
-                    <MotionNumber value={time} />
-                  </span>
-                  <span className="px-[0.7ch] text-[#a5a3a1]">/</span>
-                  <span className="text-[#a5a3a1]">2:26</span>
-                </p>
-              </div>
-            </motion.div>
-          </div>
+          {/* <div className="relative isolate h-[735px] w-[520px] border-[12px] border-white bg-[#cbd7fc]"> */}
+          {/*   <div className="absolute right-0 top-0 h-[540px] w-[215px] bg-gray-500" /> */}
+          {/*   <div className="absolute left-[90px] top-0 h-[660px] w-[360px] bg-gray-400" /> */}
+          {/*   <div className="absolute left-[48px] top-0 h-[560px] w-[405px] bg-gray-300" /> */}
+          {/*   <div className="absolute left-[48px] top-0 h-[320px] w-[300px] bg-gray-200" /> */}
+          {/*   <div className="absolute left-0 top-0 h-[310px] w-[130px] bg-gray-100" /> */}
+          {/* </div> */}
         </div>
       </MotionConfig>
     </Context.Provider>
