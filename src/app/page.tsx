@@ -27,7 +27,7 @@ export default function HomePage() {
     <Context.Provider value={{ status, setStatus }}>
       <MotionConfig transition={transition}>
         <div className="flex h-screen items-center justify-center bg-[#f2f2f2]">
-          <div className="relative isolate h-[735px] w-[520px]  border-white bg-[#cbd7fc]">
+          <div className="relative isolate h-[735px] w-[520px] border-[12px] border-white bg-[#cbd7fc]">
             {/*   <div className="absolute right-0 top-0 h-[540px] w-[215px] bg-gray-500" /> */}
             {/*   <div className="absolute left-[90px] top-0 h-[660px] w-[360px] bg-gray-400" /> */}
             {/*   <div className="absolute left-[48px] top-0 h-[560px] w-[405px] bg-gray-300" /> */}
