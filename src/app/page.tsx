@@ -31,7 +31,7 @@ export default function HomePage() {
             {/*   <div className="absolute right-0 top-0 h-[540px] w-[215px] bg-gray-500" /> */}
             {/*   <div className="absolute left-[90px] top-0 h-[660px] w-[360px] bg-gray-400" /> */}
             {/*   <div className="absolute left-[48px] top-0 h-[560px] w-[405px] bg-gray-300" /> */}
-            {/*   <div className="absolute left-[48px] top-0 h-[320px] w-[300px] bg-gray-200" /> */}
+            <div className="absolute left-[48px] top-0 h-[320px] w-[300px] bg-gray-200" />
             <div className="absolute left-0 top-0 h-[310px] w-[130px] bg-gray-100" />
           </div>
         </div>
