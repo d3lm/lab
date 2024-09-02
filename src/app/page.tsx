@@ -39,8 +39,8 @@ export default function HomePage() {
                 <div className="size-full absolute left-0 top-0 bg-gradient-to-l from-[rgba(222,243,254,0.5)] to-40%" />
               </div>
               <div className="relative h-full w-[20%] bg-pink-400 bg-[linear-gradient(310deg,rgba(175,196,239,1)_0%,rgba(203,237,253,1)_59%,rgba(222,243,254,1)_100%)]" />
-              {/* <div className="size-full absolute left-0 top-0 backdrop-blur-sm" /> */}
-              {/* <div className="size-full absolute left-0 top-0 opacity-20 [filter:url(#grain)]" /> */}
+              <div className="size-full absolute left-0 top-0 backdrop-blur-sm" />
+              <div className="size-full absolute left-0 top-0 opacity-20 [filter:url(#grain)]" />
             </div>
 
             {/* <div className="absolute left-0 top-0 flex h-[310px] w-[130px] bg-[url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODIiIGhlaWdodD0iMjYwIiB2aWV3Qm94PSIwIDAgODIgMjYwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTgyIDBIMFYyNTkuNTE5QzIwLjQzMyAyMjMuNDY5IDMxLjI4MSAyMTguODkyIDQ1LjA4MDggMjEzLjA3QzQ2Ljk4NjUgMjEyLjI2NiA0OC45NDg2IDIxMS40MzggNTEgMjEwLjVDNjguNSAyMDIuNSA3NC41IDE5OS41IDgyIDE4OFYwWiIgZmlsbD0iIzk3OTc5NyIvPgo8L3N2Zz4K)] bg-right-top bg-no-repeat drop-shadow-[0_12px_12px_rgba(57,127,117,0.9)]" /> */}
