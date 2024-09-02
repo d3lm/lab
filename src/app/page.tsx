@@ -33,7 +33,8 @@ export default function HomePage() {
             <div className="absolute right-0 top-0 h-[540px] w-[215px] bg-gray-500" />
             <div className="absolute left-[90px] top-0 h-[660px] w-[360px] bg-gray-400" />
             <div className="absolute left-[48px] top-0 h-[560px] w-[405px] bg-gray-300" />
-            <div className="absolute left-[48px] top-0 flex h-[320px] w-[300px] overflow-hidden bg-gray-200">
+
+            <div className="absolute left-[48px] top-0 flex h-[320px] w-[300px] overflow-hidden bg-gray-200 [mask:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMyMCIgdmlld0JveD0iMCAwIDMwMCAzMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0wIDMyMFYwSDMwMFYxMTlDMjc0LjUgMTQzIDI1NSAxNDYgMjEzLjUgMTU5LjVDMTc0LjMwMiAxNzIuMjUxIDEzNC41IDI0MC40NzQgMTE4LjUgMjUzLjVDNzIuMzQ2MiAyOTEuMDc0IDI4IDI4MSAwIDMyMFoiIGZpbGw9IiM5Nzk3OTciLz4KPC9zdmc+Cg==)]">
               <div className="h-full w-[50%] bg-pink-100 bg-[linear-gradient(290deg,rgba(32,34,98,1)_0%,rgba(59,88,135,1)_15%,rgba(172,172,236,1)_60%,rgba(222,243,254,1)_100%)]" />
               <div className="relative h-full w-[30%] bg-pink-200 bg-[linear-gradient(60deg,rgba(32,34,98,1)_0%,rgba(59,88,135,1)_15%,rgba(172,172,236,1)_60%,rgba(203,237,253,1)_90%,rgba(222,243,254,1)_100%)]">
                 <div className="size-full absolute left-0 top-0 bg-gradient-to-l from-[rgba(222,243,254,0.5)] to-40%" />
