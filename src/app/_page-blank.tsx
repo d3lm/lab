@@ -10,6 +10,16 @@ const Context = React.createContext<{
   setStatus: React.Dispatch<React.SetStateAction<string>>;
 }>({ status: "", setStatus: () => null });
 
+function InnerContent() {
+  const ctx = React.useContext(Context);
+
+  return (
+    <div>
+      <p>Start</p>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const [status, setStatus] = React.useState("idle");
 
@@ -26,9 +36,9 @@ export default function HomePage() {
   return (
     <Context.Provider value={{ status, setStatus }}>
       <MotionConfig transition={transition}>
-        <div className="relative flex h-screen items-center justify-center">
-          <p>Start</p>
-        </div>
+        <main className="relative flex h-screen items-center justify-center">
+          <InnerContent />
+        </main>
       </MotionConfig>
     </Context.Provider>
   );
