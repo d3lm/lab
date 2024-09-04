@@ -6,6 +6,7 @@ import {
   MotionConfig,
   type Transition,
 } from "framer-motion";
+import { Check } from "lucide-react";
 import React from "react";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.5 };
@@ -75,10 +76,11 @@ function CodeIcon() {
 }
 
 export default function HomePage() {
-  const [status, setStatus] = React.useState("success");
+  const [status, setStatus] = React.useState("idle");
   const isIdle = status === "idle";
   const isLoading = status === "loading";
   const isSuccess = status === "success";
+  const isForm = status === "form";
 
   React.useEffect(() => {
     function handleEscape(e: KeyboardEvent) {
@@ -96,7 +98,7 @@ export default function HomePage() {
       return () => clearTimeout(successTimeout);
     }
     if (status === "success") {
-      const idleTimeout = setTimeout(() => setStatus("idle"), 2000);
+      const idleTimeout = setTimeout(() => setStatus("form"), 2000);
       return () => clearTimeout(idleTimeout);
     }
   }, [status, setStatus]);
@@ -119,7 +121,9 @@ export default function HomePage() {
             </div>
             <div className="flex flex-col items-center space-y-4">
               <div className="max-w-[240px] space-y-1 text-center">
-                <h3 className="font-medium text-[#212121]">No Forms Created</h3>
+                <h3 className="font-medium text-[#212121]">
+                  {isForm ? "1 Form Created" : "No Forms Created"}
+                </h3>
                 <p className="text-sm text-[#666666]">
                   You can create a template to add in your pages.
                 </p>
@@ -135,7 +139,7 @@ export default function HomePage() {
                   <motion.p
                     key={status}
                     initial={
-                      isIdle
+                      isForm
                         ? {
                             opacity: 0,
                             y: -10,
@@ -177,12 +181,12 @@ export default function HomePage() {
                   <motion.div
                     initial={{ bottom: "-67%" }}
                     animate={{ top: "-67%" }}
-                    className="absolute left-0 z-10 h-2/3 w-0.5 -translate-x-px bg-[radial-gradient(circle,rgba(102,102,102,0.3)_0%,rgba(0,0,0,0)_100%)]"
+                    className="absolute left-0 z-10 h-2/3 w-0.5 -translate-x-px bg-[radial-gradient(circle,rgba(102,102,102,0.5)_0%,rgba(0,0,0,0)_100%)]"
                   />
                   <motion.div
                     initial={{ bottom: "-67%" }}
                     animate={{ top: "-67%" }}
-                    className="absolute right-0 z-10 h-2/3 w-0.5 translate-x-px bg-[radial-gradient(circle,rgba(102,102,102,0.3)_0%,rgba(0,0,0,0)_100%)]"
+                    className="absolute right-0 z-10 h-2/3 w-0.5 translate-x-px bg-[radial-gradient(circle,rgba(102,102,102,0.5)_0%,rgba(0,0,0,0)_100%)]"
                   />
                 </>
               )}
@@ -194,15 +198,18 @@ export default function HomePage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="size-full absolute left-0 top-0 flex flex-col items-center justify-center gap-4 rounded-xl backdrop-blur-md"
+                  className="size-full absolute left-0 top-0 flex flex-col items-center justify-center gap-4 rounded-xl backdrop-blur"
                 >
                   <motion.div
                     initial={{ scale: 1.15, y: 20 }}
                     animate={{ scale: 1, y: 0 }}
                     exit={{ scale: 0.95, y: 10 }}
-                    className="size-12 flex items-center justify-center rounded-xl bg-white shadow-[0_1px_1px_0_rgba(0,0,0,0.02),0_4px_8px_0_rgba(0,0,0,0.04)] ring-[0.8px] ring-black/[0.08]"
+                    className="size-12 relative flex items-center justify-center rounded-xl bg-white shadow-[0_1px_1px_0_rgba(0,0,0,0.02),0_4px_8px_0_rgba(0,0,0,0.04)] ring-[0.8px] ring-black/[0.08]"
                   >
                     <CalendarIcon />
+                    <div className="size-5 absolute -bottom-1.5 -right-1.5 flex items-center justify-center rounded-xl bg-white p-1 shadow-[0_1px_1px_0_rgba(0,0,0,0.02),0_4px_8px_0_rgba(0,0,0,0.04)] ring-[0.8px] ring-black/[0.08]">
+                      <Check strokeWidth={3} className="text-[#666666]/90" />
+                    </div>
                   </motion.div>
 
                   <motion.p
