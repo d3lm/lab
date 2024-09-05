@@ -108,7 +108,7 @@ export default function HomePage() {
       <MotionConfig transition={transition}>
         <div className="relative flex h-screen items-center justify-center bg-[#fafafa]">
           <div className="group relative flex w-full max-w-[620px] flex-col items-center justify-center gap-6 overflow-hidden rounded-xl border border-dashed border-black/20 bg-[#fcfcfc] p-14 transition-colors duration-500 hover:bg-black/[2%] hover:duration-200">
-            <div className="isolate flex">
+            <div className="flex">
               <div className="size-12 relative left-3 flex rotate-[-4deg] items-center justify-center rounded-xl bg-white shadow-[0_1px_1px_0_rgba(0,0,0,0.02),0_4px_8px_0_rgba(0,0,0,0.04)] ring-[0.8px] ring-black/[0.08] transition-transform duration-500 group-hover:-translate-x-5 group-hover:rotate-[-8deg] group-hover:duration-200">
                 <CalendarIcon />
               </div>
@@ -133,7 +133,7 @@ export default function HomePage() {
                 type="button"
                 disabled={isLoading || isSuccess}
                 onClick={() => setStatus("loading")}
-                className="h-10 w-[126px] rounded-lg bg-white text-sm font-medium text-[#212121] shadow-[0_1px_1px_0_rgba(0,0,0,0.04)] ring-[0.8px] ring-black/[0.08] transition-[background-color,box-shadow] hover:bg-[#ededed] active:shadow-none"
+                className="relative z-30 h-10 w-[126px] rounded-lg bg-white text-sm font-medium text-[#212121] shadow-[0_1px_1px_0_rgba(0,0,0,0.04)] ring-[0.8px] ring-black/[0.08] transition-[background-color,box-shadow] hover:bg-[#ededed] active:shadow-none"
               >
                 <AnimatePresence initial={false} mode="popLayout">
                   <motion.p
@@ -198,7 +198,7 @@ export default function HomePage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="size-full absolute left-0 top-0 flex flex-col items-center justify-center gap-4 rounded-xl backdrop-blur"
+                  className="size-full absolute left-0 top-0 z-20 flex flex-col items-center justify-center gap-4 rounded-xl backdrop-blur"
                 >
                   <motion.div
                     initial={{ scale: 1.15, y: 20 }}
@@ -216,7 +216,7 @@ export default function HomePage() {
                     initial={{ scale: 0.9, y: 10 }}
                     animate={{ scale: 1, y: 0 }}
                     exit={{ scale: 0.95, y: 10 }}
-                    className="text-center font-medium text-[#212121]"
+                    className="pb-6 text-center font-medium text-[#212121]"
                   >
                     Your new form was
                     <br />
