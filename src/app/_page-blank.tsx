@@ -15,7 +15,7 @@ function InnerContent() {
 
   return (
     <div>
-      <p>Start</p>
+      <p>Lab</p>
     </div>
   );
 }
