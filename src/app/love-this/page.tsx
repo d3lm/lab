@@ -31,21 +31,22 @@ export default function Home() {
 
       <div className="max-w-md space-y-8">
         <p>
-          Theodore is a lonely man in the final stages of his divorce. When he's
-          not working as a letter writer, his down time is spent playing video
-          games and occasionally hanging out with friends. He decides to
-          purchase the new OS1, which is advertised as the world's first
-          artificially intelligent operating system, "It's not just an operating
-          system, it's a consciousness," the ad states. Theodore quickly finds
-          himself drawn in with Samantha, the voice behind his OS1.
+          Theodore is a lonely man in the final stages of his divorce. When
+          he&apos;s not working as a letter writer, his down time is spent
+          playing video games and occasionally hanging out with friends. He
+          decides to purchase the new OS1, which is advertised as the
+          world&apos;s first artificially intelligent operating system,
+          "It&apos;s not just an operating system, it&apos;s a consciousness,"
+          the ad states. Theodore quickly finds himself drawn in with Samantha,
+          the voice behind his OS1.
         </p>
         <p>
           As they start spending time together they grow closer and closer and
           eventually find themselves in love. Having fallen in love with his OS,
           Theodore finds himself dealing with feelings of both great joy and
           doubt. As an OS, Samantha has powerful intelligence that she uses to
-          help Theodore in ways others hadn't, but how does she help him deal
-          with his inner conflict of being in love with an OS?
+          help Theodore in ways others hadn&apos;t, but how does she help him
+          deal with his inner conflict of being in love with an OS?
         </p>
         <p>
           A great film about loneliness. Splendid performance of Joaquin
