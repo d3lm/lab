@@ -66,20 +66,29 @@ function SidebarDropdown() {
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
       <DropdownMenu.Trigger
-        tabIndex={-1}
         onPointerDown={(e) => e.preventDefault()}
+        className="pointer-events-none"
+        tabIndex={-1}
         asChild
       >
         <motion.div
           onTapStart={() => setOpen(true)}
           onTap={() => setOpen(true)}
-          className={cn("group z-10 cursor-pointer focus:outline-none", {
-            "pointer-events-none": open,
-          })}
+          className={cn(
+            "group pointer-events-auto z-10 cursor-pointer focus:outline-none",
+            {
+              "pointer-events-none": open,
+            },
+          )}
         >
           <motion.button
-            data-state={open ? "open" : "closed"}
-            className="flex w-fit items-center justify-start gap-2 rounded-full px-2.5 py-1 text-3xl font-medium capitalize tracking-tighter transition ease-out focus:bg-[#202020] focus:outline-none focus:ring-1 focus:ring-white/10 group-hover:bg-[#202020] group-hover:outline-none group-hover:ring-1 group-hover:ring-white/10 data-[state=open]:bg-[#202020] data-[state=open]:ring-1 data-[state=open]:ring-white/10"
+            className={cn(
+              "flex w-fit items-center justify-start gap-2 rounded-full px-2.5 py-1 text-3xl font-medium capitalize tracking-tighter transition ease-out focus:bg-[#202020] focus:outline-none focus:ring-1 focus:ring-white/10 group-hover:bg-[#202020] group-hover:outline-none group-hover:ring-1 group-hover:ring-white/10",
+              {
+                "data-[state=open]:bg-[#202020] data-[state=open]:ring-1 data-[state=open]:ring-white/10":
+                  open,
+              },
+            )}
           >
             {value}
             <ChevronRight
@@ -94,7 +103,12 @@ function SidebarDropdown() {
       <DropdownMenu.Portal forceMount>
         <AnimatePresence>
           {open && (
-            <DropdownMenu.Content sideOffset={8} align="start" asChild>
+            <DropdownMenu.Content
+              sideOffset={8}
+              align="start"
+              onCloseAutoFocus={(e) => e.preventDefault()}
+              asChild
+            >
               <motion.div
                 initial={{ opacity: 0, y: -10, filter: "blur(4px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
