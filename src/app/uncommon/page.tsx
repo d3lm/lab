@@ -12,6 +12,7 @@ import React from "react";
 import logoUncommon from "@/assets/uncommon.png";
 import logoVaun from "@/assets/vaun-logo.png";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { cn } from "@/lib/utils";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
@@ -64,11 +65,21 @@ function SidebarDropdown() {
 
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
-      <DropdownMenu.Trigger asChild>
-        <div className="group z-10 cursor-pointer">
+      <DropdownMenu.Trigger
+        tabIndex={-1}
+        onPointerDown={(e) => e.preventDefault()}
+        asChild
+      >
+        <motion.div
+          onTapStart={() => setOpen(true)}
+          onTap={() => setOpen(true)}
+          className={cn("group z-10 cursor-pointer focus:outline-none", {
+            "pointer-events-none": open,
+          })}
+        >
           <motion.button
             data-state={open ? "open" : "closed"}
-            className="group flex w-fit items-center justify-start gap-2 rounded-full px-2.5 py-1 text-3xl font-medium capitalize tracking-tighter transition ease-out focus:bg-[#202020] focus:outline-none focus:ring-1 focus:ring-white/10 group-hover:bg-[#202020] group-hover:outline-none group-hover:ring-1 group-hover:ring-white/10 data-[state=open]:bg-[#202020] data-[state=open]:ring-1 data-[state=open]:ring-white/10"
+            className="flex w-fit items-center justify-start gap-2 rounded-full px-2.5 py-1 text-3xl font-medium capitalize tracking-tighter transition ease-out focus:bg-[#202020] focus:outline-none focus:ring-1 focus:ring-white/10 group-hover:bg-[#202020] group-hover:outline-none group-hover:ring-1 group-hover:ring-white/10 data-[state=open]:bg-[#202020] data-[state=open]:ring-1 data-[state=open]:ring-white/10"
           >
             {value}
             <ChevronRight
@@ -77,7 +88,7 @@ function SidebarDropdown() {
               className="size-6 mt-1 rotate-90 text-white/10 transition ease-out group-hover:text-white/70 group-focus:text-white/70 data-[state=open]:rotate-0"
             />
           </motion.button>
-        </div>
+        </motion.div>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal forceMount>
