@@ -50,8 +50,8 @@ function AnimalCard(props: { card: Card }) {
       onTapStart={() => ctx.setPressing(true)}
       onTapCancel={() => ctx.setPressing(false)}
       onTap={() => ctx.setPressing(false)}
-      custom={{ open }}
-      data-open={open}
+      custom={{ open: ctx.active }}
+      data-open={ctx.active}
       onClick={() => ctx.setActive(props.card)}
       whileHover={{ scale: 1.05 }}
       animate={
@@ -143,8 +143,8 @@ function InnerContent() {
                     }
                   : {}
               }
-              custom={{ open }}
-              data-open={open}
+              custom={{ open: ctx.active }}
+              data-open={ctx.active}
               className="size-full relative z-40 overflow-hidden rounded-[51px] data-[open=false]:shadow-[-16px_-16px_64px_-32px_rgba(56,76,55,1),0_32px_64px_-32px_rgba(53,113,201,0.8),32px_0_64px_-32px_rgba(153,170,4,0.6)]"
             >
               <motion.div
@@ -189,7 +189,7 @@ function InnerContent() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  custom={{ open }}
+                  custom={{ open: ctx.active }}
                   className={cn(
                     "absolute left-0 top-0 h-1/4 w-full bg-gradient-to-b",
                     {
@@ -204,7 +204,7 @@ function InnerContent() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  custom={{ open }}
+                  custom={{ open: ctx.active }}
                   className={cn(
                     "absolute bottom-0 left-0 h-1/4 w-full bg-gradient-to-t",
                     {
