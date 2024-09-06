@@ -36,9 +36,9 @@ export default function Home() {
           playing video games and occasionally hanging out with friends. He
           decides to purchase the new OS1, which is advertised as the
           world&apos;s first artificially intelligent operating system,
-          "It&apos;s not just an operating system, it&apos;s a consciousness,"
-          the ad states. Theodore quickly finds himself drawn in with Samantha,
-          the voice behind his OS1.
+          &quot;It&apos;s not just an operating system, it&apos;s a
+          consciousness,&quot; the ad states. Theodore quickly finds himself
+          drawn in with Samantha, the voice behind his OS1.
         </p>
         <p>
           As they start spending time together they grow closer and closer and
