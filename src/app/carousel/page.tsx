@@ -109,9 +109,9 @@ function PreviousButton() {
       onClick={handlePreviousClick}
       className="group absolute left-0 top-0 isolate flex h-full w-1/3 items-center pl-8"
     >
-      <div className="size-full absolute left-0 top-0 opacity-0 backdrop-blur-md transition-opacity [mask:linear-gradient(90deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)] group-hover:opacity-100" />
-      <div className="size-full absolute left-0 top-0 bg-gradient-to-r from-black/20 opacity-0 transition-opacity group-hover:opacity-100" />
-      <ChevronLeft className="size-8 z-10 text-white/30 transition-colors group-hover:text-white" />
+      <div className="size-full absolute left-0 top-0 opacity-0 backdrop-blur-md transition-opacity duration-500 ease-out [mask:linear-gradient(90deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)] group-hover:opacity-100" />
+      <div className="size-full absolute left-0 top-0 bg-gradient-to-r from-black/10 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
+      <ChevronLeft className="size-8 z-10 text-white/30 transition-colors duration-500 ease-out group-hover:text-white" />
     </button>
   );
 }
@@ -133,9 +133,9 @@ function NextButton() {
       onClick={handleNextClick}
       className="group absolute right-0 top-0 isolate flex h-full w-1/3 items-center justify-end pr-8"
     >
-      <div className="size-full absolute left-0 top-0 opacity-0 backdrop-blur-md transition-opacity [mask:linear-gradient(270deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)] group-hover:opacity-100" />
-      <div className="size-full absolute left-0 top-0 bg-gradient-to-l from-black/20 opacity-0 transition-opacity group-hover:opacity-100" />
-      <ChevronRight className="size-8 z-10 text-white/30 transition-colors group-hover:text-white" />
+      <div className="size-full absolute left-0 top-0 opacity-0 backdrop-blur-md transition-opacity duration-500 ease-out [mask:linear-gradient(270deg,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)] group-hover:opacity-100" />
+      <div className="size-full absolute left-0 top-0 bg-gradient-to-l from-black/10 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100" />
+      <ChevronRight className="size-8 z-10 text-white/30 transition-colors duration-500 ease-out group-hover:text-white" />
     </button>
   );
 }
@@ -159,13 +159,13 @@ function InnerContent() {
           animate={
             isPressingNext
               ? {
-                  transform: "perspective(800px) rotateY(15deg)",
+                  transform: "perspective(800px) rotateY(10deg)",
                   // opacity: 1,
                   filter: "blur(0px)",
                 }
               : isPressingPrevious
                 ? {
-                    transform: "perspective(800px) rotateY(-15deg)",
+                    transform: "perspective(800px) rotateY(-10deg)",
                     // opacity: 1,
                     filter: "blur(0px)",
                   }
