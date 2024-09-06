@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
-import imageBird from "../assets/bird.jpg";
+import imageBird from "@/assets/bird.jpg";
 import Image from "next/image";
 import React from "react";
 import { X } from "lucide-react";
