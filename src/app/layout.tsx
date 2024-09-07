@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import {
   Chivo_Mono,
   EB_Garamond,
@@ -43,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${DancingScript.variable} ${Mono.variable} ${GeistSans.variable} ${EBGaramond.variable} font-sans antialiased`}
+        className={`${DancingScript.variable} ${Mono.variable} ${GeistSans.variable} ${GeistMono.variable} ${EBGaramond.variable} font-sans antialiased`}
       >
         {children}
       </body>

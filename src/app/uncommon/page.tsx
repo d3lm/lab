@@ -85,8 +85,7 @@ function SidebarDropdown() {
             className={cn(
               "flex w-fit items-center justify-start gap-2 rounded-full px-2.5 py-1 text-3xl font-medium capitalize tracking-tighter transition ease-out focus:bg-[#202020] focus:outline-none focus:ring-1 focus:ring-white/10 group-hover:bg-[#202020] group-hover:outline-none group-hover:ring-1 group-hover:ring-white/10",
               {
-                "data-[state=open]:bg-[#202020] data-[state=open]:ring-1 data-[state=open]:ring-white/10":
-                  open,
+                "bg-[#202020] ring-1 ring-white/10": open,
               },
             )}
           >
