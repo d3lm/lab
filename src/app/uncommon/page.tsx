@@ -13,6 +13,7 @@ import logoUncommon from "@/assets/uncommon.png";
 import logoVaun from "@/assets/vaun-logo.png";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { cn } from "@/lib/utils";
+import useMeasure from "react-use-measure";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
@@ -183,6 +184,8 @@ function SidebarDropdown() {
 function SidebarContent() {
   const ctx = React.useContext(Context);
   const open = ctx.sidebarDropdownOpen;
+  const [addInputRef, addInputBounds] = useMeasure();
+  const addInputIsOpen = ctx.status === "add-input";
 
   return (
     <motion.div
@@ -200,14 +203,51 @@ function SidebarContent() {
       </div>
       <div className="space-y-3">
         <p className="text-sm text-white/30">Inspiration</p>
-        <div className="flex justify-between rounded-xl bg-[#1a1a1a] p-1">
-          <div className="flex gap-1">
-            <div className="rounded-[8px] bg-[#2c2c2c] px-3.5 py-3">Apple</div>
-            <div className="rounded-[8px] bg-[#2c2c2c] px-3.5 py-3">Sony</div>
-          </div>
-          <button className="rounded-[8px] bg-[#252525]/80 px-3.5 py-3">
-            Add
-          </button>
+        <div className="rounded-xl bg-[#1a1a1a] p-1">
+          <motion.div animate={{ height: addInputBounds.height }}>
+            <div ref={addInputRef} className="space-y-1">
+              <div className="flex justify-between">
+                <div className="flex gap-1">
+                  <div className="rounded-[8px] bg-[#2c2c2c] px-3.5 py-3">
+                    Apple
+                  </div>
+                  <div className="rounded-[8px] bg-[#2c2c2c] px-3.5 py-3">
+                    Sony
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  aria-label="Add"
+                  onClick={() => {
+                    if (addInputIsOpen) {
+                      ctx.setStatus("idle");
+                      return;
+                    }
+                    ctx.setStatus("add-input");
+                  }}
+                  className="rounded-[8px] bg-[#252525]/80 px-3.5 py-3"
+                >
+                  Add
+                </button>
+              </div>
+              <AnimatePresence initial={false} mode="popLayout">
+                {addInputIsOpen && (
+                  <motion.input
+                    initial={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{
+                      opacity: 0,
+                      y: -10,
+                      filter: "blur(4px)",
+                      transition: { ...transition, duration: 0.1 },
+                    }}
+                    placeholder="Company"
+                    className="w-full rounded-xl bg-[#1f1f1f] px-3.5 py-3 placeholder:text-white/40"
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
         </div>
       </div>
       <div className="rounded-xl bg-[#1f1f1f]">

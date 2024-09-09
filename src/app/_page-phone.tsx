@@ -16,7 +16,7 @@ function InnerContent() {
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[51px] bg-[#FAFAFA] text-[#1F1F1F]">
-      <p>Start</p>
+      <p>Lab</p>
     </div>
   );
 }
