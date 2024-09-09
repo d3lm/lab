@@ -101,13 +101,13 @@ function InnerContent() {
 					animate={
 						isSending
 							? {
-									scale: 1.1,
-									transition: { ...transition, delay: 0.4, duration: 0.2 },
-								}
+								scale: 1.1,
+								transition: { ...transition, delay: 0.4, duration: 0.2 },
+							}
 							: {}
 					}
 					className={cn(
-						"size-16 overflow-hidden rounded-full transition-[background-color,padding]",
+						"size-16 overflow-hidden rounded-full shadow-[0_24px_24px_-12px_rgba(0,0,0,0.4)] transition-[background-color,padding]",
 						{
 							"bg-[#8fdb24]/70 p-2 pt-3": isConfirmation,
 						},
@@ -143,11 +143,11 @@ function InnerContent() {
 					animate={
 						isSending
 							? {
-									translateY: -250,
-									scale: 0.3,
-									opacity: 0.5,
-									transition: { ...transition, duration: 0.2 },
-								}
+								translateY: -250,
+								scale: 0.3,
+								opacity: 0.5,
+								transition: { ...transition, duration: 0.15 },
+							}
 							: isSent || isConfirmation
 								? { translateY: -250, scale: 0.3, opacity: 0 }
 								: {}
@@ -163,11 +163,12 @@ function InnerContent() {
 					$4.50
 				</motion.h3>
 				<motion.p
-					initial={{ opacity: 1, translateY: 0 }}
+					key={isReady ? "ready" : "not-ready"}
+					initial={{ opacity: 1, filter: "blur(4px)", translateY: 0 }}
 					animate={
 						isSending || isSent || isConfirmation
 							? { opacity: 0, translateY: -100 }
-							: {}
+							: { filter: "blur(0px)" }
 					}
 					style={{
 						x,
@@ -193,7 +194,7 @@ function InnerContent() {
 							animate={{ y: 0, opacity: 1, scale: 1, filter: "blur(0px)" }}
 							whileTap={{ scale: 0.95 }}
 							onTap={() => ctx.setStatus("idle")}
-							className="absolute bottom-12 left-1/2 z-10 flex flex-col items-center gap-2 rounded-full bg-white/40 px-16 py-2.5 font-medium text-white backdrop-blur-md"
+							className="absolute bottom-12 left-1/2 z-10 flex flex-col items-center gap-2 rounded-full bg-white/40 px-16 py-2.5 font-medium text-white shadow-[0_24px_24px_-12px_rgba(0,0,0,0.4)] backdrop-blur-md"
 						>
 							Done
 						</motion.button>
